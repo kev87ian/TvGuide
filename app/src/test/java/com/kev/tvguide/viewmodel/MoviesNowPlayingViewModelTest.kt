@@ -1,0 +1,3 @@
+package com.kev.tvguide.viewmodel
+
+class MoviesNowPlayingViewModelTest
