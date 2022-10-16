@@ -1,0 +1,47 @@
+package com.kev.tvguide.di
+
+import com.kev.tvguide.model.network.MoviesApiService
+import com.kev.tvguide.utils.Constants
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+	@Provides
+	@Singleton
+	fun providesLoggingInterceptor() = HttpLoggingInterceptor().apply {
+		level = HttpLoggingInterceptor.Level.BODY
+	}
+
+	@Singleton
+	@Provides
+	fun providesOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+		return OkHttpClient.Builder()
+			.addInterceptor(loggingInterceptor)
+			.build()
+	}
+
+	@Singleton
+	@Provides
+	fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
+		return Retrofit.Builder()
+			.baseUrl(Constants.BASE_URL)
+			.client(okHttpClient)
+			.build()
+	}
+
+	@Singleton
+	@Provides
+	fun createsApiClass(retrofit: Retrofit) : MoviesApiService{
+		return retrofit.create(MoviesApiService::class.java)
+	}
+
+}
