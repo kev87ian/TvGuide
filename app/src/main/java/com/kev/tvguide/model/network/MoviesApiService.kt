@@ -6,6 +6,7 @@ import com.kev.tvguide.model.data.NowPlayingResponse
 import com.kev.tvguide.model.data.TopRatedMoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MoviesApiService {
@@ -19,4 +20,23 @@ interface MoviesApiService {
 	suspend fun fetchMoviesNowPlaying(
 		@Query("api_key") api_key: String = BuildConfig.API_KEY
 	) : Response<List<MovieItem>>
+
+	@GET("movie/{movie_id}")
+	suspend fun fetchSimilarMovies(
+		@Path("movie_id") movieId:Int,
+		@Query("api_key")api_key: String = BuildConfig.API_KEY
+	)
+
+
+	@GET("movie/{movie_id}/similar")
+	suspend fun fetchMovieDetails(
+		@Path("movie_id")
+		movie_id: Int,
+		@Query("api_key")
+		api_key: String = BuildConfig.API_KEY
+	): Response<List<MovieItem>>
+
+
+
+
 }

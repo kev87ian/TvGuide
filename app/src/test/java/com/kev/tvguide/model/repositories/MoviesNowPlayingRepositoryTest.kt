@@ -4,8 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.kev.tvguide.model.data.MovieItem
 import com.kev.tvguide.model.network.MoviesApiService
-import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -20,26 +18,27 @@ import org.mockito.MockitoAnnotations
 import retrofit2.Response
 
 @RunWith(JUnit4::class)
-class MoviesNowPlayingRepositoryTest{
+class MoviesNowPlayingRepositoryTest {
 	@get:Rule
 	val instantTaskExecutorRule = InstantTaskExecutorRule()
 
 	private lateinit var repository: MoviesNowPlayingRepository
+
 	@Mock
 	lateinit var moviesApiService: MoviesApiService
 
 	@Before
-	fun setup(){
+	fun setup() {
 		MockitoAnnotations.openMocks(this)
 		repository = MoviesNowPlayingRepository(moviesApiService)
 	}
 
 
-
 	@Test
-	fun `get all movies succesfully test `() = runBlocking {
-		Mockito.`when`(moviesApiService.fetchMoviesNowPlaying()).thenReturn(Response.success(listOf()))
-		val response  = repository.fetchMoviesNowPlaying()
+	fun `get all movies successfully test`() = runBlocking {
+		Mockito.`when`(moviesApiService.fetchMoviesNowPlaying())
+			.thenReturn(Response.success(listOf()))
+		val response = repository.fetchMoviesNowPlaying()
 
 		assertThat(response.code()).isEqualTo(200)
 		assertThat(response.body()).isEqualTo(listOf<MovieItem>())
@@ -53,7 +52,8 @@ class MoviesNowPlayingRepositoryTest{
 				"  \"message\": \"What you were looking for isn't here.\"\n" + "}"
 		val errorResponseBody = errorResponse.toResponseBody("application/json".toMediaTypeOrNull())
 
-		Mockito.`when`(moviesApiService.fetchMoviesNowPlaying()).thenReturn(Response.error(400, errorResponseBody))
+		Mockito.`when`(moviesApiService.fetchMoviesNowPlaying())
+			.thenReturn(Response.error(400, errorResponseBody))
 
 		val response = repository.fetchMoviesNowPlaying()
 
