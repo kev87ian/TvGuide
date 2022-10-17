@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/moviesFragment"
+        android:icon="@drawable/ic_baseline_movie_24"
+        android:title="Movies" />
+
+    <item
+        android:id="@+id/searchMoviesFragment"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search"/>
+
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="Watch List"/>
+
+
+</menu>

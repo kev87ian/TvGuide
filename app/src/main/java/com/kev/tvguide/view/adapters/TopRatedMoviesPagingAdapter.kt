@@ -11,8 +11,8 @@ import com.kev.tvguide.databinding.MovieLayoutItemBinding
 import com.kev.tvguide.model.data.MovieItem
 import com.kev.tvguide.utils.Constants.Companion.BASE_POSTER_URL
 
-class TopRatedMoviesPagedAdapter(diffCallBack: DiffUtil.ItemCallback<MovieItem>) :
-	PagingDataAdapter<MovieItem, TopRatedMoviesPagedAdapter.MoviesViewHolder>(diffCallBack) {
+class TopRatedMoviesPagingAdapter() :
+	PagingDataAdapter<MovieItem, TopRatedMoviesPagingAdapter.MoviesViewHolder>(diffCallBack) {
 
 
 	class MoviesViewHolder(val binding: MovieLayoutItemBinding) :
