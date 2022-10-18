@@ -1,6 +1,7 @@
 package com.kev.tvguide.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kev.tvguide.R
 import com.kev.tvguide.databinding.FragmentTopRatedMoviesBinding
+import com.kev.tvguide.utils.Resource
+import com.kev.tvguide.view.adapters.MoviesNowPlayingAdapter
 import com.kev.tvguide.view.adapters.PaginatedMoviesLoadStateAdapter
 import com.kev.tvguide.view.adapters.TopRatedMoviesPagingAdapter
+import com.kev.tvguide.viewmodel.MoviesNowPlayingViewModel
 import com.kev.tvguide.viewmodel.TopRatedMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,6 +32,9 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 	private lateinit var moviesPagingAdapter: TopRatedMoviesPagingAdapter
 	private val viewModel: TopRatedMoviesViewModel by viewModels()
 
+	private val nowPlayingViewModel : MoviesNowPlayingViewModel by viewModels()
+	private lateinit var nowPlayingAdapter : MoviesNowPlayingAdapter
+
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
@@ -39,6 +46,69 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		loadTopRatedMovies()
 		observePaginationState()
 
+		binding.btnRetry.setOnClickListener {
+			retryFetchingMovies()
+		}
+		binding.nowPlayingRetryBtn.setOnClickListener {
+			retryFetchingNowPlaying()
+		}
+
+
+		initMoviesNowPlayingAdapter()
+		fetchMoviesNowPlaying()
+		observeNowPlayingUi()
+
+	}
+
+	private fun retryFetchingNowPlaying(){
+		nowPlayingViewModel.fetchMoviesNowPlaying()
+	}
+
+
+	private fun fetchMoviesNowPlaying() {
+		nowPlayingViewModel.fetchMoviesNowPlaying()
+	}
+
+
+	private fun observeNowPlayingUi(){
+		nowPlayingViewModel.moviesNowPlayingObservable.observe(viewLifecycleOwner){state->
+			when(state){
+				is Resource.Loading ->{
+					binding.shimmerLayoutNowPlaying.startShimmer()
+					binding.shimmerLayoutNowPlaying.visibility = View.VISIBLE
+					binding.nowPlayingRetryBtn.visibility = View.GONE
+					binding.nowPlayingErrorTextview.visibility = View.GONE
+				}
+
+				is Resource.Success->{
+					binding.shimmerLayoutNowPlaying.stopShimmer()
+					binding.shimmerLayoutNowPlaying.visibility = View.GONE
+					nowPlayingAdapter.differ.submitList(state.data)
+				}
+				is Resource.Error->{
+					binding.shimmerLayoutNowPlaying.visibility = View.GONE
+					binding.nowPlayingErrorTextview.visibility = View.VISIBLE
+					binding.nowPlayingErrorTextview.text = state.message
+					binding.nowPlayingRetryBtn.visibility = View.VISIBLE
+					binding.shimmerLayoutNowPlaying.stopShimmer()
+				}
+			}
+
+		}
+	}
+
+	private fun initMoviesNowPlayingAdapter(){
+		nowPlayingAdapter = MoviesNowPlayingAdapter()
+		binding.moviesNowPlayingRecyclerView.apply {
+			adapter = nowPlayingAdapter
+			layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+		}
+	}
+
+
+	private fun retryFetchingMovies() {
+		moviesPagingAdapter.retry()
 	}
 
 	private fun observePaginationState() {
@@ -70,10 +140,18 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 	private fun observeUiState() {
 		moviesPagingAdapter.addLoadStateListener { loadstate ->
 			if (loadstate.refresh is LoadState.Loading) {
+				binding.errorMsgTextview.visibility = View.GONE
+				binding.btnRetry.visibility = View.GONE
 				binding.shimmerLayout.visibility = View.VISIBLE
 				binding.shimmerLayout.startShimmer()
-
+			}
+			else if (loadstate.refresh is LoadState.Error) {
+				binding.shimmerLayout.visibility = View.GONE
+				binding.errorMsgTextview.visibility = View.VISIBLE
+				binding.btnRetry.visibility = View.VISIBLE
 			} else {
+				binding.errorMsgTextview.visibility = View.GONE
+				binding.btnRetry.visibility = View.GONE
 				binding.shimmerLayout.stopShimmer()
 				binding.shimmerLayout.visibility = View.GONE
 			}
@@ -82,9 +160,7 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 
 	private fun loadTopRatedMovies() {
 		lifecycleScope.launch {
-			viewModel.listData.collect {
-				moviesPagingAdapter.submitData(it)
-			}
+			viewModel.fetchPopularMovies().collect { moviesPagingAdapter.submitData(it) }
 		}
 	}
 

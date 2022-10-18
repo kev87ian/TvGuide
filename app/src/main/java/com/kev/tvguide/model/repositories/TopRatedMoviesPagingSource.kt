@@ -8,9 +8,11 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class TopRatedMoviesPagingRepository @Inject constructor(
+
+class TopRatedMoviesPagingSource @Inject constructor(
 	private val apiService: MoviesApiService
 ) : PagingSource<Int, MovieItem>() {
+
 
 	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieItem> {
 
@@ -46,6 +48,4 @@ class TopRatedMoviesPagingRepository @Inject constructor(
 
 	}
 
-
 }
-

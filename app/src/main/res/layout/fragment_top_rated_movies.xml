@@ -25,17 +25,27 @@
         android:layout_marginStart="10dp"
         android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/now_playing_progress_bar"
 
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayoutNowPlaying"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include layout="@layout/shimmer_layout"/>
+
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
         <TextView
@@ -54,7 +64,7 @@
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/genresRecyclerView"
+            android:id="@+id/movies_now_playing_recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible" />
@@ -71,41 +81,65 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerLayout"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
+        android:orientation="vertical"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_alignParentEnd="true">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:id="@+id/error_msg_textview"
+            android:layout_gravity="center_horizontal"
+            android:text="Something went wrong. Please retry"/>
 
-            <include layout="@layout/shimmer_layout"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="retry"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btn_retry"/>
 
-            <include layout="@layout/shimmer_layout"/>
-            <include layout="@layout/shimmer_layout"/>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        </LinearLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_layout"/>
+
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_below="@id/shimmerLayout"
-        android:id="@+id/top_rated_recyclerview"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_below="@id/shimmerLayout"
+            android:id="@+id/top_rated_recyclerview"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

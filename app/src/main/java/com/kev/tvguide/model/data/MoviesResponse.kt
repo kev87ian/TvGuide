@@ -3,7 +3,7 @@ package com.kev.tvguide.model.data
 
 import com.google.gson.annotations.SerializedName
 
-data class TopRatedMoviesResponse(
+data class MoviesResponse(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")
