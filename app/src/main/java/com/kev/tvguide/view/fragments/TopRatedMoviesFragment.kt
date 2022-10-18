@@ -1,10 +1,10 @@
 package com.kev.tvguide.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,7 +42,7 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 
 		(activity as AppCompatActivity).supportActionBar?.title = "Tv Guide"
 		initTopRatedMoviesRecyclerView()
-		observeUiState()
+		observePaginationUiState()
 		loadTopRatedMovies()
 		observePaginationState()
 
@@ -50,7 +50,7 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 			retryFetchingMovies()
 		}
 		binding.nowPlayingRetryBtn.setOnClickListener {
-			retryFetchingNowPlaying()
+			fetchMoviesNowPlaying()
 		}
 
 
@@ -60,9 +60,18 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 
 	}
 
-	private fun retryFetchingNowPlaying(){
-		nowPlayingViewModel.fetchMoviesNowPlaying()
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		_binding = FragmentTopRatedMoviesBinding.inflate(inflater, container, false)
+		return binding.root
 	}
+
+
+
 
 
 	private fun fetchMoviesNowPlaying() {
@@ -86,11 +95,13 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 					nowPlayingAdapter.differ.submitList(state.data)
 				}
 				is Resource.Error->{
+
 					binding.shimmerLayoutNowPlaying.visibility = View.GONE
 					binding.nowPlayingErrorTextview.visibility = View.VISIBLE
 					binding.nowPlayingErrorTextview.text = state.message
 					binding.nowPlayingRetryBtn.visibility = View.VISIBLE
-					binding.shimmerLayoutNowPlaying.stopShimmer()
+					Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+
 				}
 			}
 
@@ -120,24 +131,17 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 
 	}
 
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		_binding = FragmentTopRatedMoviesBinding.inflate(inflater, container, false)
-		return binding.root
-	}
 
 	private fun initTopRatedMoviesRecyclerView() {
 		moviesPagingAdapter = TopRatedMoviesPagingAdapter()
 		binding.topRatedRecyclerview.apply {
 			adapter = moviesPagingAdapter
-			layoutManager = GridLayoutManager(requireContext(), 2)
+			layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+			//layoutManager = GridLayoutManager(requireContext(), 2)
 		}
 	}
 
-	private fun observeUiState() {
+	private fun observePaginationUiState() {
 		moviesPagingAdapter.addLoadStateListener { loadstate ->
 			if (loadstate.refresh is LoadState.Loading) {
 				binding.errorMsgTextview.visibility = View.GONE

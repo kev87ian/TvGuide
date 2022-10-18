@@ -21,9 +21,9 @@
 
         <ImageView
             android:id="@+id/cv_iv_movie_poster"
-            android:layout_width="200dp"
+            android:layout_width="170dp"
             android:adjustViewBounds="true"
-            android:layout_height="200dp"
+            android:layout_height="170dp"
             android:scaleType="fitXY"
 
             />
