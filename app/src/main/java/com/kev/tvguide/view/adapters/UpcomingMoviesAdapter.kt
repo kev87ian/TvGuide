@@ -1,0 +1,58 @@
+package com.kev.tvguide.view.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.kev.tvguide.R
+import com.kev.tvguide.databinding.MovieLayoutItemBinding
+import com.kev.tvguide.model.data.MovieItem
+import com.kev.tvguide.utils.Constants
+
+class UpcomingMoviesAdapter : RecyclerView.Adapter<UpcomingMoviesAdapter.MoviesViewHolder>() {
+
+	class MoviesViewHolder(val binding: MovieLayoutItemBinding) :
+		RecyclerView.ViewHolder(binding.root)
+
+
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
+		val binding = MovieLayoutItemBinding.inflate(
+			LayoutInflater.from(parent.context),
+			parent,
+			false
+		)
+		return MoviesViewHolder(binding)
+	}
+
+	override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
+		val currentMovie = differ.currentList[position]
+		with(holder){
+			binding.cvMovieTitle.text = currentMovie.title
+			binding.cvMovieReleaseDate.text = currentMovie.releaseDate
+			binding.cvMovieRating.text =currentMovie.voteAverage.toString()
+
+			binding.cvIvMoviePoster.load(Constants.BASE_POSTER_URL.plus(currentMovie.posterPath)){
+				placeholder(R.drawable.loading)
+				error(R.drawable.no_picture_icon)
+			}
+		}
+	}
+
+	override fun getItemCount(): Int {
+		return differ.currentList.size
+	}
+
+	val diffUtil = object : DiffUtil.ItemCallback<MovieItem>() {
+		override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
+			return oldItem.id == newItem.id
+		}
+
+		override fun areContentsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
+			return oldItem == newItem
+		}
+	}
+
+	val differ = AsyncListDiffer(this, diffUtil)
+}

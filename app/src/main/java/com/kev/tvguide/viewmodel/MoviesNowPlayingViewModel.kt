@@ -23,28 +23,6 @@ class MoviesNowPlayingViewModel @Inject constructor(
 	val moviesNowPlayingObservable : LiveData<Resource<List<MovieItem>>> = _moviesNowPlayingObservable
 
 
-/*	fun fetchMoviesNowPlaying() = viewModelScope.launch {
-		_moviesNowPlayingObservable.postValue(Resource.Loading())
-		val response = repository.fetchMoviesNowPlaying()
-
-		try {
-			if (response.isSuccessful){
-				_moviesNowPlayingObservable.postValue(Resource.Success(response.body()?.movieItems!!))
-			}
-			else{
-				_moviesNowPlayingObservable.postValue(Resource.Error(response.code().toString()))
-				Log.e("Error ya", response.code().toString())
-			}
-
-		}catch (e:Exception){
-			e.printStackTrace()
-			when(e){
-				is IOException -> _moviesNowPlayingObservable.postValue(Resource.Error("Ensure you have an active internet connection"))
-				else -> _moviesNowPlayingObservable.postValue(Resource.Error(e.localizedMessage))
-			}
-		}
-	}*/
-
 	fun fetchMoviesNowPlaying() = viewModelScope.launch {
 		_moviesNowPlayingObservable.postValue(Resource.Loading())
 

@@ -31,7 +31,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_retry"
+        android:id="@+id/top_rated_movies_btn_retry"
         app:layout_constraintTop_toBottomOf="@id/error_msg_textview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

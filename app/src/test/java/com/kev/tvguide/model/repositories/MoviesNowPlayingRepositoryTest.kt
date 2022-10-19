@@ -3,6 +3,7 @@ package com.kev.tvguide.model.repositories
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.kev.tvguide.model.data.MovieItem
+import com.kev.tvguide.model.data.MoviesResponse
 import com.kev.tvguide.model.network.MoviesApiService
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -37,16 +38,16 @@ class MoviesNowPlayingRepositoryTest {
 	@Test
 	fun `get all movies successfully test`() = runBlocking {
 		Mockito.`when`(moviesApiService.fetchMoviesNowPlaying())
-			.thenReturn(Response.success(listOf()))
+			.thenReturn(Response.success(MoviesResponse(1, listOf(), 2, 2)))
 		val response = repository.fetchMoviesNowPlaying()
 
 		assertThat(response.code()).isEqualTo(200)
-		assertThat(response.body()).isEqualTo(listOf<MovieItem>())
+		assertThat(response.body()?.movieItems).isEqualTo(listOf<MovieItem>())
 	}
 
 
 	@Test
-	fun `unsuccessful network call returns status 200 test`() = runBlocking {
+	fun `unsuccessful network call returns status 400 test`() = runBlocking {
 		val errorResponse = "{\n" +
 				"  \"type\": \"error\",\n" +
 				"  \"message\": \"What you were looking for isn't here.\"\n" + "}"

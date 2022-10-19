@@ -20,7 +20,7 @@ class LoadStateViewHolder (parent: ViewGroup,
 	private val binding = LoadStateLayoutItemBinding.bind(itemView)
 	private val progressBar: ProgressBar = binding.progressBar
 	private val errorTextView: TextView = binding.errorMsgTextview
-	private val retryButton: Button = binding.btnRetry
+	private val retryButton: Button = binding.topRatedMoviesBtnRetry
 		.also {
 			it.setOnClickListener {
 				retry()

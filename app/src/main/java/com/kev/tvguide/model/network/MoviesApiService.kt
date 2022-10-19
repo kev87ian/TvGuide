@@ -20,6 +20,12 @@ interface MoviesApiService {
 		@Query("api_key") api_key: String = BuildConfig.API_KEY
 	) : Response<MoviesResponse>
 
+	@GET("movie/upcoming")
+	suspend fun fetchUpcomingMovies(
+		@Query("api_key") api_key: String= BuildConfig.API_KEY
+	) : Response<MoviesResponse>
+
+/*
 	@GET("movie/{movie_id}")
 	suspend fun fetchSimilarMovies(
 		@Path("movie_id") movieId:Int,
@@ -36,6 +42,7 @@ interface MoviesApiService {
 	): Response<List<MovieItem>>
 
 
+*/
 
 
 }

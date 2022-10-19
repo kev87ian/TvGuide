@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.kev.tvguide.getOrAwaitValue
 import com.kev.tvguide.model.data.MovieItem
+import com.kev.tvguide.model.data.MoviesResponse
 import com.kev.tvguide.model.network.MoviesApiService
 import com.kev.tvguide.model.repositories.MoviesNowPlayingRepository
 import com.kev.tvguide.utils.Resource
@@ -45,64 +46,15 @@ class MoviesNowPlayingViewModelTest {
 
 	}
 
-
 	@Test
 	fun `get all movies currently playing`() = runBlocking {
-		//    Mockito.`when`(mainRepository.getAllMovies())
-		//                .thenReturn(Response.success(listOf<Movie>(Movie("movie", "", "new"))))
-
 		Mockito.`when`(repository.fetchMoviesNowPlaying())
-			.thenReturn(
-				Response.success(
-					listOf<MovieItem>(
-						MovieItem(
-							true,
-							"",
-							75478,
-							"",
-							"",
-							"",
-							6.77,
-							"",
-							"",
-							"",
-							false,
-							2.45,
-							234,
-
-							)
-					)
-				)
-			)
-
+			.thenReturn(Response.success(MoviesResponse(1, listOf<MovieItem>(), 2, 2)))
 		viewModel.fetchMoviesNowPlaying()
 		val result = viewModel.moviesNowPlayingObservable.getOrAwaitValue()
-		assertThat(result.data).isEqualTo(	listOf<MovieItem>(
-			MovieItem(
-				true,
-				"",
-				75478,
-				"",
-				"",
-				"",
-				6.77,
-				"",
-				"",
-				"",
-				false,
-				2.45,
-				234,
 
-				)
-		))
+		assertThat(result.data).isEqualTo(listOf<MovieItem>())
 	}
 
-	@Test
-	fun `fetch an empty list of movies`() = runBlocking {
-		Mockito.`when`(repository.fetchMoviesNowPlaying())
-			.thenReturn(Response.success(listOf()))
-		viewModel.fetchMoviesNowPlaying()
-		val result = viewModel.moviesNowPlayingObservable.getOrAwaitValue()
-		assertThat(listOf<MovieItem>()).isEqualTo(result.data)
-	}
+
 }
