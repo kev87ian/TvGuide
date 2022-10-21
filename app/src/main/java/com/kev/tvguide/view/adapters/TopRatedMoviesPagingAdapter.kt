@@ -37,10 +37,9 @@ class TopRatedMoviesPagingAdapter() :
 		val currentMovie = getItem(position)
 
 		holder.binding.apply {
-			cvMovieTitle.text = currentMovie?.title
+		/*	cvMovieTitle.text = currentMovie?.title
 			cvMovieRating.text = currentMovie?.voteAverage.toString()
-			cvMovieReleaseDate.text = currentMovie?.releaseDate
-//			Glide.with(holder.itemView.context).load(BASE_POSTER_URL.plus(currentMovie.posterPath)).into(cvIvMoviePoster)
+			cvMovieReleaseDate.text = currentMovie?.releaseDate*/
 
 			cvIvMoviePoster.load(BASE_POSTER_URL.plus(currentMovie?.posterPath)) {
 				placeholder(R.drawable.loading)

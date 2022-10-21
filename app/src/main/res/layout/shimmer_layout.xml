@@ -42,6 +42,7 @@
 
             </FrameLayout>
 
+<!--
             <TextView
                 android:id="@+id/leftMovieTitleTextView"
                 android:layout_width="match_parent"
@@ -60,6 +61,7 @@
                 android:textColor="#BDBDBD"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
+-->
 
         </LinearLayout>
 
@@ -102,6 +104,7 @@
 
             </FrameLayout>
 
+<!--
             <TextView
                 android:id="@+id/rightMovieTitleTextView"
                 android:layout_width="match_parent"
@@ -121,6 +124,7 @@
                 android:textColor="#BDBDBD"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
+-->
 
         </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.kev.tvguide.model.network
 
 import com.kev.tvguide.BuildConfig
+import com.kev.tvguide.model.data.MovieDetailsResponse
 import com.kev.tvguide.model.data.MovieItem
 import com.kev.tvguide.model.data.MoviesResponse
 import retrofit2.Response
@@ -24,6 +25,13 @@ interface MoviesApiService {
 	suspend fun fetchUpcomingMovies(
 		@Query("api_key") api_key: String= BuildConfig.API_KEY
 	) : Response<MoviesResponse>
+
+	@GET("movie/{movie_id}")
+	suspend fun fetchMovieDetails(
+		@Path("movie_id") movieId : Int,
+		@Query("api_key") api_key: String = BuildConfig.API_KEY
+	) : Response<MovieDetailsResponse>
+
 
 /*
 	@GET("movie/{movie_id}")

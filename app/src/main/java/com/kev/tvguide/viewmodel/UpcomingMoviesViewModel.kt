@@ -32,7 +32,7 @@ class UpcomingMoviesViewModel @Inject constructor(
 				when(e){
 					is IOException -> _upcomingMoviesObservable.postValue(Resource.Error("Ensure you have an active internet connection."))
 					is HttpException -> _upcomingMoviesObservable.postValue(Resource.Error("We could not reach servers, please retry."))
-					else -> _upcomingMoviesObservable.postValue(Resource.Error(e.localizedMessage))
+					else -> _upcomingMoviesObservable.postValue(Resource.Error(e.localizedMessage!!))
 				}
 		}
 	}

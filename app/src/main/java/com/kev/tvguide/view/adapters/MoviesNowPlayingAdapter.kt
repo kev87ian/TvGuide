@@ -32,9 +32,9 @@ class MoviesNowPlayingAdapter : RecyclerView.Adapter<MoviesNowPlayingAdapter.Mov
 
 		val currentMovie = differ.currentList[position]
 		with(holder) {
-			binding.cvMovieTitle.text = currentMovie.title
+	/*		binding.cvMovieTitle.text = currentMovie.title
 			binding.cvMovieReleaseDate.text = currentMovie.releaseDate
-			binding.cvMovieRating.text = currentMovie.voteAverage.toString()
+			binding.cvMovieRating.text = currentMovie.voteAverage.toString()*/
 			binding.cvIvMoviePoster.load(Constants.BASE_POSTER_URL.plus(currentMovie.posterPath)) {
 				placeholder(R.drawable.loading)
 				error(R.drawable.no_picture_icon)
