@@ -1,4 +1,4 @@
-package com.kev.tvguide.model.repositories
+package com.kev.tvguide.model.datasource
 
 import androidx.paging.PagingSource
 import com.kev.tvguide.BuildConfig

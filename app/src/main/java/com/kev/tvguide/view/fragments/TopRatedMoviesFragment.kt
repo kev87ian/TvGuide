@@ -84,7 +84,6 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		upcomingMoviesViewModel.fetchUpcomingMovies()
 
 
-
 		upcomingMoviesViewModel.upcomingMoviesObservable.observe(viewLifecycleOwner) { resource ->
 			when (resource) {
 				is Resource.Loading -> {

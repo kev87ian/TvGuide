@@ -33,7 +33,7 @@ class TopRatedMoviesPagingAdapter() :
 
 	override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
 
-		//this method is unique to the paging adapter class
+
 		val currentMovie = getItem(position)
 
 		holder.binding.apply {
@@ -45,6 +45,10 @@ class TopRatedMoviesPagingAdapter() :
 				placeholder(R.drawable.loading)
 				error(R.drawable.no_picture_icon)
 			}
+		}
+		//navigate to movie details fragment
+		holder.itemView.setOnClickListener {
+
 		}
 
 	}

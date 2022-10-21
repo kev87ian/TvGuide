@@ -2,6 +2,7 @@ package com.kev.tvguide.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.kev.tvguide.R
 import com.kev.tvguide.databinding.MoviesNowPlayingLayoutBinding
 import com.kev.tvguide.model.data.MovieItem
 import com.kev.tvguide.utils.Constants
+import com.kev.tvguide.view.fragments.TopRatedMoviesFragmentDirections
 
 class MoviesNowPlayingAdapter : RecyclerView.Adapter<MoviesNowPlayingAdapter.MoviesViewHolder>() {
 
@@ -41,6 +43,11 @@ class MoviesNowPlayingAdapter : RecyclerView.Adapter<MoviesNowPlayingAdapter.Mov
 			}
 
 
+		}
+
+		holder.itemView.setOnClickListener {
+			val direction = TopRatedMoviesFragmentDirections.actionTopRatedMoviesFragmentToMovieDetailsFragment(currentMovie.id)
+			it.findNavController().navigate(direction)
 		}
 
 	}
