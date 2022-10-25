@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import coil.load
+import com.kev.tvguide.R
 import com.kev.tvguide.R.layout.fragment_movie_details
 import com.kev.tvguide.databinding.FragmentMovieDetailsBinding
 import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.utils.Constants
 import com.kev.tvguide.utils.State
 import com.kev.tvguide.viewmodel.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +24,6 @@ class MovieDetailsFragment : Fragment(fragment_movie_details){
 	private val binding get() = _binding!!
 
 	private val viewModel : MovieDetailsViewModel by viewModels()
-
 	private val args : MovieDetailsFragmentArgs by navArgs()
 
 	override fun onCreateView(
@@ -50,7 +52,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details){
 				}
 
 				is State.Success ->{
-				//	Toast.makeText(requireContext(), args.movieID.toString(), Toast.LENGTH_SHORT).show()
+
 					bindUi(resource.data!!)
 
 				}
@@ -61,9 +63,14 @@ class MovieDetailsFragment : Fragment(fragment_movie_details){
 		}
 	}
 
-	private fun bindUi(data: MovieDetailsResponse) {
+	private fun bindUi(movie: MovieDetailsResponse) {
 
-		Toast.makeText(requireContext(), data.overview, Toast.LENGTH_SHORT).show()
+		binding.imageView.load(Constants.BASE_POSTER_URL.plus(movie.posterPath)){
+			error(R.drawable.no_picture_icon)
+		}
+
+
+
 
 	}
 

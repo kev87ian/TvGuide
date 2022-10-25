@@ -6,4 +6,6 @@
     <string name="now_playing">Now Playing</string>
     <string name="io_error">Ensure you have an active internet connection</string>
     <string name="movie_poster">movie_poster</string>
+    <string name="release_date">Release Date:</string>
+    <string name="synopsis">Synopsis</string>
 </resources>
