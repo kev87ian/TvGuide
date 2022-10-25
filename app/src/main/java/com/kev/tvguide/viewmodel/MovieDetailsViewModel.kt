@@ -1,10 +1,9 @@
 package com.kev.tvguide.viewmodel
 
 import androidx.lifecycle.*
-import com.kev.tvguide.model.data.MovieDetailsResponse
-import com.kev.tvguide.model.data.MovieItem
-import com.kev.tvguide.model.repositories.MovieDetailsRepository
-import com.kev.tvguide.utils.Resource
+import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.repositories.MovieDetailsRepository
+import com.kev.tvguide.utils.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -19,26 +18,29 @@ class MovieDetailsViewModel @Inject constructor(
 
 	private val movieId = savedStateHandle.get<Int>("movieID")
 
-	private val _movieDetailsObservable = MutableLiveData<Resource<MovieDetailsResponse>>()
-	val movieDetailsObservable : LiveData<Resource<MovieDetailsResponse>> = _movieDetailsObservable
+	private val _movieDetailsObservable = MutableLiveData<State<MovieDetailsResponse>>()
+	val movieDetailsObservable : LiveData<State<MovieDetailsResponse>> = _movieDetailsObservable
 
 	fun fetchMovieDetails(movieId:Int) = viewModelScope.launch {
-		_movieDetailsObservable.postValue(Resource.Loading())
+		_movieDetailsObservable.postValue(State.Loading())
 		try {
 			val result = repository.fetchMovieDetails(movieId)
-			_movieDetailsObservable.postValue(Resource.Success(result.body()!!))
+			_movieDetailsObservable.postValue(State.Success(result.body()!!))
 
 		}catch (e:Exception){
 			when(e){
-				is IOException -> _movieDetailsObservable.postValue(Resource.Error("Ensure you have an active internet connection."))
-				is HttpException -> _movieDetailsObservable.postValue(Resource.Error("An unknown error occurred. Please retry"))
-				else -> _movieDetailsObservable.postValue(Resource.Error(e.localizedMessage!!))
+				is IOException -> _movieDetailsObservable.postValue(State.Error("Ensure you have an active internet connection."))
+				is HttpException -> _movieDetailsObservable.postValue(State.Error("An unknown error occurred. Please retry"))
+				else -> _movieDetailsObservable.postValue(State.Error(e.localizedMessage!!))
 			}
 		}
+
 	}
 
 
 	init {
 		fetchMovieDetails(movieId!!)
 	}
+
+
 }

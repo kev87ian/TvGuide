@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.kev.tvguide.R
 import com.kev.tvguide.databinding.MoviesNowPlayingLayoutBinding
-import com.kev.tvguide.model.data.MovieItem
+import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.utils.Constants
 import com.kev.tvguide.view.fragments.TopRatedMoviesFragmentDirections
 

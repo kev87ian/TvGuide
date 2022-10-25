@@ -1,9 +1,9 @@
-package com.kev.tvguide.model.datasource
+package com.kev.tvguide.paging
 
 import androidx.paging.PagingSource
 import com.kev.tvguide.BuildConfig
-import com.kev.tvguide.model.data.MovieItem
-import com.kev.tvguide.model.network.MoviesApiService
+import com.kev.tvguide.models.MovieItem
+import com.kev.tvguide.network.MoviesApiService
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject

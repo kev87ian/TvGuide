@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.kev.tvguide.R
 import com.kev.tvguide.databinding.MovieLayoutItemBinding
-import com.kev.tvguide.model.data.MovieItem
+import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.utils.Constants.Companion.BASE_POSTER_URL
 
 class TopRatedMoviesPagingAdapter() :

@@ -1,10 +1,11 @@
-package com.kev.tvguide.model.repositories
+package com.kev.tvguide.models.repositories
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.kev.tvguide.model.data.MovieItem
-import com.kev.tvguide.model.data.MoviesResponse
-import com.kev.tvguide.model.network.MoviesApiService
+import com.kev.tvguide.models.MovieItem
+import com.kev.tvguide.models.MoviesResponse
+import com.kev.tvguide.network.MoviesApiService
+import com.kev.tvguide.repositories.MoviesNowPlayingRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody

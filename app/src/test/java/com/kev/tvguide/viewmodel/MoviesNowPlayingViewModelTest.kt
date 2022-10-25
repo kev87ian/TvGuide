@@ -3,12 +3,10 @@ package com.kev.tvguide.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.kev.tvguide.getOrAwaitValue
-import com.kev.tvguide.model.data.MovieItem
-import com.kev.tvguide.model.data.MoviesResponse
-import com.kev.tvguide.model.network.MoviesApiService
-import com.kev.tvguide.model.repositories.MoviesNowPlayingRepository
-import com.kev.tvguide.utils.Resource
-import junit.framework.Assert.assertEquals
+import com.kev.tvguide.models.MovieItem
+import com.kev.tvguide.models.MoviesResponse
+import com.kev.tvguide.network.MoviesApiService
+import com.kev.tvguide.repositories.MoviesNowPlayingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

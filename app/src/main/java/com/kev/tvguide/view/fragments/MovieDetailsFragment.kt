@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
-import com.kev.tvguide.R
 import com.kev.tvguide.R.layout.fragment_movie_details
 import com.kev.tvguide.databinding.FragmentMovieDetailsBinding
-import com.kev.tvguide.model.data.MovieDetailsResponse
-import com.kev.tvguide.utils.Resource
+import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.utils.State
 import com.kev.tvguide.viewmodel.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,17 +44,18 @@ class MovieDetailsFragment : Fragment(fragment_movie_details){
 
 		viewModel.movieDetailsObservable.observe(viewLifecycleOwner){resource->
 			when(resource){
-				is Resource.Error->{
+				is State.Error->{
 					//TODO
+					Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
 				}
 
-				is Resource.Success ->{
+				is State.Success ->{
 				//	Toast.makeText(requireContext(), args.movieID.toString(), Toast.LENGTH_SHORT).show()
 					bindUi(resource.data!!)
 
 				}
 
-				is Resource.Loading ->{
+				is State.Loading ->{
 				}
 			}
 		}

@@ -1,15 +1,15 @@
-package com.kev.tvguide.model.data
+package com.kev.tvguide.models
 
 
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
-    @SerializedName("page")
+	@SerializedName("page")
     val page: Int,
-    @SerializedName("results")
+	@SerializedName("results")
     val movieItems: List<MovieItem>,
-    @SerializedName("total_pages")
+	@SerializedName("total_pages")
     val totalPages: Int,
-    @SerializedName("total_results")
+	@SerializedName("total_results")
     val totalResults: Int
 )

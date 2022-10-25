@@ -1,9 +1,9 @@
-package com.kev.tvguide.model.repositories
+package com.kev.tvguide.repositories
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.kev.tvguide.model.datasource.TopRatedMoviesPagingSource
-import com.kev.tvguide.model.network.MoviesApiService
+import com.kev.tvguide.paging.TopRatedMoviesPagingSource
+import com.kev.tvguide.network.MoviesApiService
 import javax.inject.Inject
 
 class TopRatedMoviesRepository @Inject constructor(

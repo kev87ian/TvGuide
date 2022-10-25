@@ -12,7 +12,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kev.tvguide.R
 import com.kev.tvguide.databinding.FragmentTopRatedMoviesBinding
-import com.kev.tvguide.utils.Resource
+import com.kev.tvguide.utils.State
 import com.kev.tvguide.view.adapters.MoviesNowPlayingAdapter
 import com.kev.tvguide.view.adapters.PaginatedMoviesLoadStateAdapter
 import com.kev.tvguide.view.adapters.TopRatedMoviesPagingAdapter
@@ -86,19 +86,20 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 
 		upcomingMoviesViewModel.upcomingMoviesObservable.observe(viewLifecycleOwner) { resource ->
 			when (resource) {
-				is Resource.Loading -> {
+				is State.Loading -> {
 					binding.shimmerLayoutUpcomingMovies.visibility = View.VISIBLE
 					binding.shimmerLayoutUpcomingMovies.startShimmer()
 					binding.upcomingMoviesErrorTextview.visibility = View.GONE
 					binding.upcomingRetryBtn.visibility = View.GONE
 				}
-				is Resource.Success -> {
+				is State.Success -> {
 					binding.shimmerLayoutUpcomingMovies.visibility = View.GONE
 					upcomingMoviesAdapter.differ.submitList(resource.data)
 				}
-				is Resource.Error -> {
+				is State.Error -> {
 					binding.shimmerLayoutUpcomingMovies.visibility = View.GONE
 					binding.upcomingMoviesErrorTextview.visibility = View.VISIBLE
+					binding.upcomingMoviesErrorTextview.text = resource.message
 					binding.upcomingRetryBtn.visibility = View.VISIBLE
 				}
 			}
@@ -123,19 +124,19 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		//observes changes in the live data to keep the UI update
 		nowPlayingViewModel.moviesNowPlayingObservable.observe(viewLifecycleOwner) { state ->
 			when (state) {
-				is Resource.Loading -> {
+				is State.Loading -> {
 					binding.shimmerLayoutNowPlaying.startShimmer()
 					binding.shimmerLayoutNowPlaying.visibility = View.VISIBLE
 					binding.nowPlayingRetryBtn.visibility = View.GONE
 					binding.nowPlayingErrorTextview.visibility = View.GONE
 				}
 
-				is Resource.Success -> {
+				is State.Success -> {
 					binding.shimmerLayoutNowPlaying.stopShimmer()
 					binding.shimmerLayoutNowPlaying.visibility = View.GONE
 					nowPlayingAdapter.differ.submitList(state.data)
 				}
-				is Resource.Error -> {
+				is State.Error -> {
 
 					binding.shimmerLayoutNowPlaying.visibility = View.GONE
 					binding.nowPlayingErrorTextview.visibility = View.VISIBLE

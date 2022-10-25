@@ -1,6 +1,6 @@
 package com.kev.tvguide.di
 
-import com.kev.tvguide.model.network.MoviesApiService
+import com.kev.tvguide.network.MoviesApiService
 import com.kev.tvguide.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -42,7 +42,7 @@ object AppModule {
 
 	@Singleton
 	@Provides
-	fun createsApiClass(retrofit: Retrofit) : MoviesApiService{
+	fun createsApiClass(retrofit: Retrofit) : MoviesApiService {
 		return retrofit.create(MoviesApiService::class.java)
 	}
 

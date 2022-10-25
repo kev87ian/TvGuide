@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kev.tvguide.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -19,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
 		val navHostFragment = supportFragmentManager.findFragmentById(R.id.moviesNavHostFragment) as NavHostFragment
 		navController = navHostFragment.navController
-
-
 
 		val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 		bottomNavigationView.setupWithNavController(navController)

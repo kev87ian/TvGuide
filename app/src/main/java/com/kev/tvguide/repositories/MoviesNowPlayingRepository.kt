@@ -1,6 +1,6 @@
-package com.kev.tvguide.model.repositories
+package com.kev.tvguide.repositories
 
-import com.kev.tvguide.model.network.MoviesApiService
+import com.kev.tvguide.network.MoviesApiService
 import javax.inject.Inject
 
 
