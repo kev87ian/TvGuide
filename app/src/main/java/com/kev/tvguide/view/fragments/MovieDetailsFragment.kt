@@ -48,7 +48,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		super.onViewCreated(view, savedInstanceState)
 		mdialog = ProgressDialog(requireContext())
 
-		fetchData()
+		fetchMovieDetails()
 		fetchCast()
 		fetchSimilarMovies()
 	}
@@ -113,7 +113,8 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		}
 	}
 
-	private fun fetchData() {
+
+	private fun fetchMovieDetails() {
 		viewModel.fetchMovieDetails(args.movieID)
 
 		viewModel.movieDetailsObservable.observe(viewLifecycleOwner) { state ->
@@ -132,6 +133,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 					binding.uiStateLayout.visibility = View.GONE
 					binding.views.visibility = View.VISIBLE
 					bindUi(state.data!!)
+					saveToDb(state.data)
 
 				}
 
@@ -144,6 +146,14 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 					mdialog.show()
 				}
 			}
+		}
+	}
+
+	private fun saveToDb(movieDetails: MovieDetailsResponse) {
+
+		binding.favoriteButton.setOnClickListener {
+			viewModel.insertMovieIntoDb(movieDetails)
+			Toast.makeText(requireContext(), "Kazi safi", Toast.LENGTH_SHORT).show()
 		}
 	}
 
@@ -165,6 +175,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 			hours.toString().plus("hr ").plus(minutes.toString()).plus("min")
 
 		//TODO soma fragment lifecyle vizuri and understand why the movies fragment glitches on resume
+
 
 	}
 

@@ -1,10 +1,15 @@
 package com.kev.tvguide.di
 
+import android.content.Context
+import com.kev.tvguide.db.FavoriteMoviesDao
+import com.kev.tvguide.db.MoviesDatabase
 import com.kev.tvguide.network.MoviesApiService
 import com.kev.tvguide.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.internal.Contexts
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,6 +49,18 @@ object AppModule {
 	@Provides
 	fun createsApiClass(retrofit: Retrofit) : MoviesApiService {
 		return retrofit.create(MoviesApiService::class.java)
+	}
+
+	@Singleton
+	@Provides
+	fun providesMoviesDao(moviesDatabase: MoviesDatabase) : FavoriteMoviesDao{
+		return moviesDatabase.MoviesDao()
+	}
+
+	@Singleton
+	@Provides
+	fun providesMoviesDatabase(@ApplicationContext context: Context) : MoviesDatabase{
+		return MoviesDatabase.getMovieDbInstance(context)
 	}
 
 }

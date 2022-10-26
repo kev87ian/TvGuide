@@ -1,15 +1,18 @@
 package com.kev.tvguide.models
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "movie_details")
 data class MovieDetailsResponse(
 	@SerializedName("adult")
     val adult: Boolean?,
-	@SerializedName("backdrop_path")
-    val backdropPath: Any?,
+
 	@SerializedName("budget")
     val budget: Int?,
 	@SerializedName("homepage")
     val homepage: String?,
+	@PrimaryKey(autoGenerate = false)
 	@SerializedName("id")
     val id: Int?,
 	@SerializedName("imdb_id")

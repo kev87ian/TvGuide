@@ -4,7 +4,7 @@ package com.kev.tvguide.models
 import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "favorite_movies")
+
 data class MovieItem(
     @SerializedName("adult")
     val adult: Boolean?,

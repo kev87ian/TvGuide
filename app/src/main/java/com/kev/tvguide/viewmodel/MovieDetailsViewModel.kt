@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.bumptech.glide.Glide.init
 import com.kev.tvguide.models.MovieCastResponse
 import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.models.MoviesResponse
 import com.kev.tvguide.repositories.MovieDetailsRepository
 import com.kev.tvguide.utils.State
@@ -90,6 +91,10 @@ class MovieDetailsViewModel @Inject constructor(
 			}
 
 		}
+	}
+
+	fun insertMovieIntoDb(movieDetailsResponse: MovieDetailsResponse) = viewModelScope.launch {
+		repository.insertMovieIntoDB(movieDetailsResponse)
 	}
 
 

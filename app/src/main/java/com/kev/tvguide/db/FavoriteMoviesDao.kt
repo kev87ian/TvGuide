@@ -1,0 +1,26 @@
+package com.kev.tvguide.db
+
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.models.MovieItem
+
+@Dao
+interface FavoriteMoviesDao {
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun saveMovie(movieDetailsResponse: MovieDetailsResponse) : Long
+
+	@Query("SELECT * FROM movie_details")
+	fun getSavedMovies() : LiveData<List<MovieDetailsResponse>>
+
+	@Delete
+	fun deleteMovieFromFavorites(movieDetailsResponse: MovieDetailsResponse)
+
+	/*@Query("SELECT * FROM movie_details")
+	fun countRecords() : ArrayList<MovieDetailsResponse>*/
+}
