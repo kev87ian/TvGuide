@@ -1,5 +1,6 @@
 package com.kev.tvguide.view.fragments
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.kev.tvguide.R
 import com.kev.tvguide.R.layout.fragment_movie_details
@@ -14,6 +16,7 @@ import com.kev.tvguide.databinding.FragmentMovieDetailsBinding
 import com.kev.tvguide.models.MovieDetailsResponse
 import com.kev.tvguide.utils.Constants
 import com.kev.tvguide.utils.State
+import com.kev.tvguide.view.adapters.MovieCastAdapter
 import com.kev.tvguide.viewmodel.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +28,9 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 	private val viewModel: MovieDetailsViewModel by viewModels()
 	private val args: MovieDetailsFragmentArgs by navArgs()
 
+	private lateinit var mdialog: ProgressDialog
+
+	private lateinit var castAdapter: MovieCastAdapter
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -36,34 +42,71 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		mdialog = ProgressDialog(requireContext())
 
 		fetchData()
+		fetchCast()
+	}
+
+	private fun fetchCast() {
+		castAdapter = MovieCastAdapter()
+		binding.castRecyclerview.apply {
+			adapter = castAdapter
+			layoutManager =
+				LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+		}
+
+
+		viewModel.fetchMovieCast(args.movieID)
+
+		viewModel.movieCastObservable.observe(viewLifecycleOwner) { state ->
+			when (state) {
+				is State.Error -> {
+
+				}
+
+				is State.Success -> {
+					castAdapter.differ.submitList(state.data?.cast!!)
+				}
+
+				is State.Loading->{
+
+				}
+
+			}
+
+		}
 	}
 
 	private fun fetchData() {
 		viewModel.fetchMovieDetails(args.movieID)
 
-		viewModel.movieDetailsObservable.observe(viewLifecycleOwner) { resource ->
-			when (resource) {
+		viewModel.movieDetailsObservable.observe(viewLifecycleOwner) { state ->
+			when (state) {
 				is State.Error -> {
+					mdialog.hide()
 					binding.uiStateLayout.visibility = View.VISIBLE
-					binding.progressBar.visibility = View.GONE
+					/*binding.progressBar.visibility = View.GONE*/
 					binding.errorMsgTextview.visibility = View.VISIBLE
-					binding.errorMsgTextview.text = resource.message
+					binding.errorMsgTextview.text = state.message
 					binding.retryBtn.visibility = View.VISIBLE
 				}
 
 				is State.Success -> {
+					mdialog.hide()
 					binding.uiStateLayout.visibility = View.GONE
 					binding.views.visibility = View.VISIBLE
-					bindUi(resource.data!!)
+					bindUi(state.data!!)
 
 				}
 
 				is State.Loading -> {
-					binding.progressBar.visibility = View.VISIBLE
+/*					binding.progressBar.visibility = View.VISIBLE*/
 					binding.errorMsgTextview.visibility = View.GONE
 					binding.retryBtn.visibility = View.GONE
+					mdialog.setTitle("Working")
+					mdialog.setMessage("Please wait.")
+					mdialog.show()
 				}
 			}
 		}
@@ -73,6 +116,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 
 		binding.imageView.load(Constants.BASE_POSTER_URL.plus(movie.posterPath)) {
 			error(R.drawable.no_picture_icon)
+			placeholder(R.drawable.loading)
 		}
 
 		binding.movieTitleTextView.text = movie.title

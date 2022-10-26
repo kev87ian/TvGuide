@@ -8,4 +8,6 @@ class MovieDetailsRepository @Inject constructor(
 ) {
 
 	suspend fun fetchMovieDetails(movieId:Int) = apiService.fetchMovieDetails(movieId)
+
+	suspend fun fetchMovieCast(movieId: Int) = apiService.fetchMovieCasts(movieId)
 }

@@ -1,6 +1,7 @@
 package com.kev.tvguide.network
 
 import com.kev.tvguide.BuildConfig
+import com.kev.tvguide.models.MovieCastResponse
 import com.kev.tvguide.models.MovieDetailsResponse
 import com.kev.tvguide.models.MoviesResponse
 import retrofit2.Response
@@ -31,6 +32,12 @@ interface MoviesApiService {
 		@Query("api_key") api_key: String = BuildConfig.API_KEY
 	) : Response<MovieDetailsResponse>
 
+	@GET("movie/{movie_id}/credits")
+	suspend fun fetchMovieCasts(
+		@Path("movie_id") movieId : Int,
+		@Query("api_key") api_key: String = BuildConfig.API_KEY
+
+	) : Response<MovieCastResponse>
 
 /*
 	@GET("movie/{movie_id}")
