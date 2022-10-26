@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,7 @@ import com.kev.tvguide.models.MovieDetailsResponse
 import com.kev.tvguide.utils.Constants
 import com.kev.tvguide.utils.State
 import com.kev.tvguide.view.adapters.MovieCastAdapter
+import com.kev.tvguide.view.adapters.SimilarMoviesAdapter
 import com.kev.tvguide.viewmodel.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +33,8 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 	private lateinit var mdialog: ProgressDialog
 
 	private lateinit var castAdapter: MovieCastAdapter
+	private lateinit var similarMoviesAdapter: SimilarMoviesAdapter
+
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -46,6 +50,33 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 
 		fetchData()
 		fetchCast()
+		fetchSimilarMovies()
+	}
+
+	private fun fetchSimilarMovies() {
+		similarMoviesAdapter = SimilarMoviesAdapter()
+		binding.similarMoviesRecyclerview.apply {
+			adapter = similarMoviesAdapter
+			layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+		}
+
+		viewModel.fetchSimilarMovies(args.movieID)
+
+		viewModel.similarMoviesObservable.observe(viewLifecycleOwner){state->
+			when(state){
+				is State.Error->{
+
+				}
+				is State.Success->{
+					similarMoviesAdapter.differ.submitList(state.data?.movieItems!!)
+				}
+
+				is State.Loading->{
+
+				}
+			}
+		}
+
 	}
 
 	private fun fetchCast() {
@@ -62,14 +93,18 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		viewModel.movieCastObservable.observe(viewLifecycleOwner) { state ->
 			when (state) {
 				is State.Error -> {
-
+					Toast.makeText(
+						requireContext(),
+						"Couldn't fetch cast. Please retry.",
+						Toast.LENGTH_SHORT
+					).show()
 				}
 
 				is State.Success -> {
 					castAdapter.differ.submitList(state.data?.cast!!)
 				}
 
-				is State.Loading->{
+				is State.Loading -> {
 
 				}
 

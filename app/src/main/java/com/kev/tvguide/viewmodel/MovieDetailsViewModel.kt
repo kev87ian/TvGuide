@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.bumptech.glide.Glide.init
 import com.kev.tvguide.models.MovieCastResponse
 import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.models.MoviesResponse
 import com.kev.tvguide.repositories.MovieDetailsRepository
 import com.kev.tvguide.utils.State
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,11 @@ class MovieDetailsViewModel @Inject constructor(
 
 	private val _movieCastObservable = MutableLiveData<State<MovieCastResponse>>()
 	val movieCastObservable : LiveData<State<MovieCastResponse>> = _movieCastObservable
+
+	private val _similarMoviesObservable = MutableLiveData<State<MoviesResponse>>()
+	val similarMoviesObservable : LiveData<State<MoviesResponse>> = _similarMoviesObservable
+
+
 
 	fun fetchMovieDetails(movieId:Int) = viewModelScope.launch {
 		_movieDetailsObservable.postValue(State.Loading())
@@ -62,6 +68,27 @@ class MovieDetailsViewModel @Inject constructor(
 				is IOException -> _movieCastObservable.postValue(State.Error("No internet connection"))
 				else -> _movieCastObservable.postValue(State.Error(e.localizedMessage!!))
 			}
+		}
+	}
+
+
+	fun fetchSimilarMovies(movieId: Int)  = viewModelScope.launch {
+		_similarMoviesObservable.postValue(State.Loading())
+		try {
+			val result = repository.fetchSimilarMovies(movieId)
+			if (result.isSuccessful){
+				_similarMoviesObservable.postValue(State.Success(result.body()!!))
+			}
+
+			else if(result.body() == null){
+			_similarMoviesObservable.postValue(State.Error("No similar movies available right now."))
+			}
+		}catch (e:Exception){
+			e.printStackTrace()
+			when(e){
+				is IOException -> _similarMoviesObservable.postValue(State.Error("No internet connection"))
+			}
+
 		}
 	}
 

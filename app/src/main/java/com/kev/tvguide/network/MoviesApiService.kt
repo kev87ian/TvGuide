@@ -3,6 +3,7 @@ package com.kev.tvguide.network
 import com.kev.tvguide.BuildConfig
 import com.kev.tvguide.models.MovieCastResponse
 import com.kev.tvguide.models.MovieDetailsResponse
+import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.models.MoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -39,24 +40,15 @@ interface MoviesApiService {
 
 	) : Response<MovieCastResponse>
 
-/*
-	@GET("movie/{movie_id}")
-	suspend fun fetchSimilarMovies(
-		@Path("movie_id") movieId:Int,
-		@Query("api_key")api_key: String = BuildConfig.API_KEY
-	)
-
-
 	@GET("movie/{movie_id}/similar")
-	suspend fun fetchMovieDetails(
+	suspend fun fetchSimilarMovies(
 		@Path("movie_id")
 		movie_id: Int,
 		@Query("api_key")
 		api_key: String = BuildConfig.API_KEY
-	): Response<List<MovieItem>>
+	): Response<MoviesResponse>
 
 
-*/
 
 
 }
