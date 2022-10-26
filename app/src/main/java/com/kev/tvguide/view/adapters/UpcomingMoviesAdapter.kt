@@ -44,7 +44,7 @@ class UpcomingMoviesAdapter : RecyclerView.Adapter<UpcomingMoviesAdapter.MoviesV
 		}
 
 		holder.itemView.setOnClickListener {
-			val direction = TopRatedMoviesFragmentDirections.actionTopRatedMoviesFragmentToMovieDetailsFragment(currentMovie.id)
+			val direction = TopRatedMoviesFragmentDirections.actionTopRatedMoviesFragmentToMovieDetailsFragment(currentMovie?.id!!)
 			it.findNavController().navigate(direction)
 		}
 	}

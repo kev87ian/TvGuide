@@ -2,6 +2,7 @@ package com.kev.tvguide.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.kev.tvguide.R
 import com.kev.tvguide.databinding.MovieLayoutItemBinding
 import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.utils.Constants.Companion.BASE_POSTER_URL
+import com.kev.tvguide.view.fragments.TopRatedMoviesFragmentDirections
 
 class TopRatedMoviesPagingAdapter() :
 	PagingDataAdapter<MovieItem, TopRatedMoviesPagingAdapter.MoviesViewHolder>(diffCallBack) {
@@ -48,7 +50,8 @@ class TopRatedMoviesPagingAdapter() :
 		}
 		//navigate to movie details fragment
 		holder.itemView.setOnClickListener {
-
+		val direction = TopRatedMoviesFragmentDirections.actionTopRatedMoviesFragmentToMovieDetailsFragment(currentMovie?.id!!)
+			it.findNavController().navigate(direction)
 		}
 
 	}

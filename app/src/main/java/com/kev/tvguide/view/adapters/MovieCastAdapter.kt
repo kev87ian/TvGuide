@@ -30,6 +30,7 @@ class MovieCastAdapter : RecyclerView.Adapter<MovieCastAdapter.CastViewHolder>()
 		val currentCast = differ.currentList[position]
 		with(holder){
 			binding.characterNameTv.text = currentCast.name
+			binding.characterStageName.text = currentCast.character
 			binding.characterImageView.load(Constants.BASE_POSTER_URL.plus(currentCast.profilePath)){
 				error(R.drawable.no_picture_icon)
 			}

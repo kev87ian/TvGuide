@@ -28,13 +28,22 @@
         <TextView
             android:id="@+id/character_name_tv"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/character_image_view"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold" />
 
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="italic"
+
+            android:layout_marginBottom="5dp"
+            android:id="@+id/character_stage_name"
+            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>

@@ -60,12 +60,12 @@
         tools:context=".view.fragments.MovieDetailsFragment">
 
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/v_guideline_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
+            <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_end="10dp"
+                android:orientation="vertical"/>
 
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -116,6 +116,7 @@
             android:id="@+id/release_date_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:text="@string/release_date"
             app:layout_constraintEnd_toStartOf="@id/release_date_textview"
@@ -150,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="Rating: "
-
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/release_date_textview" />
 
@@ -181,12 +182,15 @@
             android:id="@+id/synopsis_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:autoSizeTextType="uniform"
+            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="10dp"
             app:layout_constraintHorizontal_bias="0"
+            app:layout_constrainedWidth="true"
             app:layout_constraintTop_toBottomOf="@id/synopsis_placeholder" />
 
         <TextView
@@ -197,6 +201,7 @@
             android:autoSizeMaxTextSize="22sp"
             android:autoSizeMinTextSize="18sp"
             android:text="Cast"
+            android:layout_marginTop="5dp"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"

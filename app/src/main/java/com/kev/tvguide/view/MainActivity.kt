@@ -2,7 +2,9 @@ package com.kev.tvguide.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,6 +25,22 @@ class MainActivity : AppCompatActivity() {
 
 		val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 		bottomNavigationView.setupWithNavController(navController)
+
+		navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+			if (nd.id == R.id.moviesFragment || nd.id == R.id.favoritesFragment || nd.id == R.id.searchMoviesFragment ) {
+				bottomNavigationView.visibility = View.VISIBLE
+			} else {
+				bottomNavigationView.visibility = View.GONE
+			}
+			/*if (nd.id==R.id.movieDetailsFragment){
+				supportActionBar?.hide()
+			}
+
+			else{
+				supportActionBar?.show()
+
+			}*/
 	}
 
+}
 }

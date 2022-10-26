@@ -46,7 +46,7 @@ class MoviesNowPlayingAdapter : RecyclerView.Adapter<MoviesNowPlayingAdapter.Mov
 		}
 
 		holder.itemView.setOnClickListener {
-			val direction = TopRatedMoviesFragmentDirections.actionTopRatedMoviesFragmentToMovieDetailsFragment(currentMovie.id)
+			val direction = TopRatedMoviesFragmentDirections.actionTopRatedMoviesFragmentToMovieDetailsFragment(currentMovie?.id!!)
 			it.findNavController().navigate(direction)
 		}
 

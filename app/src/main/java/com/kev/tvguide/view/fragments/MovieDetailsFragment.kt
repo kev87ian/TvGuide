@@ -157,7 +157,12 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		binding.movieTitleTextView.text = movie.title
 		binding.releaseDateTextview.text = movie.releaseDate
 		binding.synopsisTextview.text = movie.overview
-		binding.ratingTextview.text = movie.voteAverage.toFloat().toString()
+		binding.ratingTextview.text = movie.voteAverage.toString()
+
+		val hours = movie.runtime?.div(60)
+		val minutes = movie.runtime?.rem(60)
+		binding.runtimeTextview.text =
+			hours.toString().plus("hr ").plus(minutes.toString()).plus("min")
 
 		//TODO soma fragment lifecyle vizuri and understand why the movies fragment glitches on resume
 
