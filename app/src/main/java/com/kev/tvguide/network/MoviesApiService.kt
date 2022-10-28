@@ -3,7 +3,6 @@ package com.kev.tvguide.network
 import com.kev.tvguide.BuildConfig
 import com.kev.tvguide.models.MovieCastResponse
 import com.kev.tvguide.models.MovieDetailsResponse
-import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.models.MoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET

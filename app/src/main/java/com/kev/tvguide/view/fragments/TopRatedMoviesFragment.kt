@@ -14,8 +14,8 @@ import com.kev.tvguide.R
 import com.kev.tvguide.databinding.FragmentTopRatedMoviesBinding
 import com.kev.tvguide.utils.State
 import com.kev.tvguide.view.adapters.MoviesNowPlayingAdapter
-import com.kev.tvguide.view.adapters.PaginatedMoviesLoadStateAdapter
-import com.kev.tvguide.view.adapters.TopRatedMoviesPagingAdapter
+import com.kev.tvguide.view.adapters.pagination.PaginatedMoviesLoadStateAdapter
+import com.kev.tvguide.view.adapters.pagination.TopRatedMoviesPagingAdapter
 import com.kev.tvguide.view.adapters.UpcomingMoviesAdapter
 import com.kev.tvguide.viewmodel.MoviesNowPlayingViewModel
 import com.kev.tvguide.viewmodel.TopRatedMoviesViewModel
@@ -182,13 +182,14 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 			if (loadstate.refresh is LoadState.Loading) {
 				binding.errorMsgTextview.visibility = View.GONE
 				binding.topRatedMoviesBtnRetry.visibility = View.GONE
-				binding.shimmerLayout.visibility = View.VISIBLE
+				/*binding.shimmerLayout.visibility = View.VISIBLE*/
 				binding.shimmerLayout.startShimmer()
 			} else if (loadstate.refresh is LoadState.Error) {
 				binding.shimmerLayout.visibility = View.GONE
 				binding.errorMsgTextview.visibility = View.VISIBLE
 				binding.topRatedMoviesBtnRetry.visibility = View.VISIBLE
 			} else {
+				binding.shimmerLayout.stopShimmer()
 				binding.errorMsgTextview.visibility = View.GONE
 				binding.topRatedMoviesBtnRetry.visibility = View.GONE
 				binding.shimmerLayout.stopShimmer()

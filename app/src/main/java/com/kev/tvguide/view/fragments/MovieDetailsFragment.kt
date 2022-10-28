@@ -51,6 +51,17 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		fetchMovieDetails()
 		fetchCast()
 		fetchSimilarMovies()
+
+		binding.retryBtn.setOnClickListener {
+			retry()
+		}
+	}
+
+	private fun retry() {
+
+		fetchMovieDetails()
+		fetchCast()
+		fetchSimilarMovies()
 	}
 
 	private fun fetchSimilarMovies() {

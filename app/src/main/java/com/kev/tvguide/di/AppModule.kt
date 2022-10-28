@@ -8,7 +8,6 @@ import com.kev.tvguide.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
@@ -47,20 +46,19 @@ object AppModule {
 
 	@Singleton
 	@Provides
-	fun createsApiClass(retrofit: Retrofit) : MoviesApiService {
+	fun createsApiClass(retrofit: Retrofit): MoviesApiService {
 		return retrofit.create(MoviesApiService::class.java)
 	}
 
 	@Singleton
 	@Provides
-	fun providesMoviesDao(moviesDatabase: MoviesDatabase) : FavoriteMoviesDao{
-		return moviesDatabase.MoviesDao()
+	fun providesInstanceOfMoviesDatabase(@ApplicationContext context: Context): MoviesDatabase {
+		return MoviesDatabase.getDbInstance(context)
 	}
 
 	@Singleton
 	@Provides
-	fun providesMoviesDatabase(@ApplicationContext context: Context) : MoviesDatabase{
-		return MoviesDatabase.getMovieDbInstance(context)
+	fun providesMoviesDao(moviesDatabase: MoviesDatabase): FavoriteMoviesDao {
+		return moviesDatabase.moviesDao()
 	}
-
 }

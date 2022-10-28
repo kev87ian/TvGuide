@@ -1,16 +1,8 @@
-package com.kev.tvguide.view.adapters
+package com.kev.tvguide.view.adapters.pagination
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.kev.tvguide.R
-import com.kev.tvguide.databinding.LoadStateLayoutItemBinding
 
 class PaginatedMoviesLoadStateAdapter(
 	private val retry:() -> Unit

@@ -10,14 +10,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kev.tvguide.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.random.Random
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MoviesActivity : AppCompatActivity() {
 	private lateinit var navController: NavController
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		setContentView(R.layout.activity_movies)
 
 
 		val navHostFragment = supportFragmentManager.findFragmentById(R.id.moviesNavHostFragment) as NavHostFragment
@@ -27,19 +26,19 @@ class MainActivity : AppCompatActivity() {
 		bottomNavigationView.setupWithNavController(navController)
 
 		navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
-			if (nd.id == R.id.moviesFragment || nd.id == R.id.favoritesFragment || nd.id == R.id.searchMoviesFragment ) {
-				bottomNavigationView.visibility = View.VISIBLE
-			} else {
+			if (nd.id == R.id.movieDetailsFragment) {
 				bottomNavigationView.visibility = View.GONE
+			} else {
+				bottomNavigationView.visibility = View.VISIBLE
 			}
-			/*if (nd.id==R.id.movieDetailsFragment){
+			if (nd.id==R.id.movieDetailsFragment){
 				supportActionBar?.hide()
 			}
 
 			else{
 				supportActionBar?.show()
 
-			}*/
+			}
 	}
 
 }

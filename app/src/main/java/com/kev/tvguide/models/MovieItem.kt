@@ -1,7 +1,6 @@
 package com.kev.tvguide.models
 
 
-import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 

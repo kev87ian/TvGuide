@@ -7,10 +7,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kev.tvguide.models.MovieDetailsResponse
-import com.kev.tvguide.models.MovieItem
 
 @Dao
 interface FavoriteMoviesDao {
+
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun saveMovie(movieDetailsResponse: MovieDetailsResponse) : Long
@@ -18,9 +18,11 @@ interface FavoriteMoviesDao {
 	@Query("SELECT * FROM movie_details")
 	fun getSavedMovies() : LiveData<List<MovieDetailsResponse>>
 
-	@Delete
-	fun deleteMovieFromFavorites(movieDetailsResponse: MovieDetailsResponse)
+	@Query("SELECT * FROM movie_details")
+	fun checkIfDbIsEmpty() : List<MovieDetailsResponse>
 
-	/*@Query("SELECT * FROM movie_details")
-	fun countRecords() : ArrayList<MovieDetailsResponse>*/
+	@Delete
+	fun deleteMovie(movieDetailsResponse: MovieDetailsResponse)
+
+
 }

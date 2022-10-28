@@ -1,4 +1,4 @@
-package com.kev.tvguide.view.adapters
+package com.kev.tvguide.view.adapters.pagination
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
