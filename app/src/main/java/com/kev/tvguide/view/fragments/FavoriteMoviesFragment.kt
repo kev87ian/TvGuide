@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kev.tvguide.R
 import com.kev.tvguide.databinding.FragmentFavoriteMoviesBinding
 import com.kev.tvguide.view.adapters.FavoriteMoviesAdapter
@@ -17,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 	private var _binding: FragmentFavoriteMoviesBinding? = null
 	private val binding get() = _binding!!
+
 
 	private val viewModel: FavoriteMoviesViewModel by viewModels()
 	private lateinit var favoriteMoviesAdapter: FavoriteMoviesAdapter
@@ -34,20 +37,20 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		fetchData()
+		swipeToDelete()
 	}
 
-	private fun fetchData(){
+	private fun fetchData() {
 		favoriteMoviesAdapter = FavoriteMoviesAdapter()
 		binding.recyclerview.apply {
 			adapter = favoriteMoviesAdapter
 			layoutManager = LinearLayoutManager(requireContext())
 		}
 
-		if (viewModel.countRecords().isEmpty()){
+		if (viewModel.countRecords().isEmpty()) {
 			binding.textView.visibility = View.VISIBLE
 
-		}
-		else {
+		} else {
 			viewModel.getSavedMovies().observe(viewLifecycleOwner) {
 				favoriteMoviesAdapter.differ.submitList(it)
 			}
@@ -55,6 +58,41 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 
 
 	}
+
+	private fun swipeToDelete() {
+		val itemTouchCallBack = object : ItemTouchHelper.SimpleCallback(
+			ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+			ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+		) {
+			override fun onMove(
+				recyclerView: RecyclerView,
+				viewHolder: RecyclerView.ViewHolder,
+				target: RecyclerView.ViewHolder
+			): Boolean {
+				return true
+			}
+
+			override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+				val position = viewHolder.absoluteAdapterPosition
+				val movie = favoriteMoviesAdapter.differ.currentList[position]
+				viewModel.deleteMovie(movie)
+
+
+
+			}
+		}
+
+		ItemTouchHelper(itemTouchCallBack).apply {
+			attachToRecyclerView(binding.recyclerview)
+		}
+
+		if (viewModel.countRecords().isEmpty()) {
+			binding.textView.visibility = View.VISIBLE
+
+		}
+	}
+
+
 	override fun onDestroy() {
 		_binding = null
 		super.onDestroy()

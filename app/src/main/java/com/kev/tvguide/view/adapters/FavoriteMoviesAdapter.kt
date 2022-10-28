@@ -7,19 +7,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.kev.tvguide.R
+import com.kev.tvguide.databinding.FavoriteMoviesItemBinding
 import com.kev.tvguide.databinding.MovieLayoutItemBinding
 import com.kev.tvguide.models.MovieDetailsResponse
 import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.utils.Constants
 
 class FavoriteMoviesAdapter : RecyclerView.Adapter<FavoriteMoviesAdapter.MoviesViewHolder>() {
-	class MoviesViewHolder(val binding: MovieLayoutItemBinding) :
+	class MoviesViewHolder(val binding: FavoriteMoviesItemBinding) :
 		RecyclerView.ViewHolder(binding.root)
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
 
-		val binding = MovieLayoutItemBinding.inflate(
+		val binding = FavoriteMoviesItemBinding.inflate(
 			LayoutInflater.from(parent.context), parent, false
 		)
 		return MoviesViewHolder(binding)

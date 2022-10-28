@@ -31,14 +31,7 @@ class MoviesActivity : AppCompatActivity() {
 			} else {
 				bottomNavigationView.visibility = View.VISIBLE
 			}
-			if (nd.id==R.id.movieDetailsFragment){
-				supportActionBar?.hide()
-			}
 
-			else{
-				supportActionBar?.show()
-
-			}
 	}
 
 }

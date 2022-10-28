@@ -12,7 +12,7 @@
         android:id="@+id/textView"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="You don't have favorites... yet."
+        android:text="You don't have any movies on your watch list... yet."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
