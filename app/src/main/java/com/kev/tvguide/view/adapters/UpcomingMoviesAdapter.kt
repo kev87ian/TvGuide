@@ -36,7 +36,7 @@ class UpcomingMoviesAdapter : RecyclerView.Adapter<UpcomingMoviesAdapter.MoviesV
 			binding.cvMovieRating.text =currentMovie.voteAverage.toString()*/
 
 			binding.cvIvMoviePoster.load(Constants.BASE_POSTER_URL.plus(currentMovie.posterPath)){
-				placeholder(R.drawable.loading)
+
 				error(R.drawable.no_picture_icon)
 			}
 

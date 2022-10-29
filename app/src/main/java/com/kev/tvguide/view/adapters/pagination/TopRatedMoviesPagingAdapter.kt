@@ -44,7 +44,7 @@ class TopRatedMoviesPagingAdapter() :
 			cvMovieReleaseDate.text = currentMovie?.releaseDate*/
 
 			cvIvMoviePoster.load(BASE_POSTER_URL.plus(currentMovie?.posterPath)) {
-				placeholder(R.drawable.loading)
+
 				error(R.drawable.no_picture_icon)
 			}
 		}

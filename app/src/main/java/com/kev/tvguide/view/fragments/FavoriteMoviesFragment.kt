@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kev.tvguide.R
 import com.kev.tvguide.databinding.FragmentFavoriteMoviesBinding
@@ -36,24 +36,30 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		checkIfDbIsEmpty()
 		fetchData()
 		swipeToDelete()
+
+
+	}
+
+	private fun checkIfDbIsEmpty() {
+		if (viewModel.countRecords().isEmpty()) {
+			binding.textView.visibility = View.VISIBLE
+		} else {
+			binding.textView.visibility = View.GONE
+		}
 	}
 
 	private fun fetchData() {
 		favoriteMoviesAdapter = FavoriteMoviesAdapter()
 		binding.recyclerview.apply {
 			adapter = favoriteMoviesAdapter
-			layoutManager = LinearLayoutManager(requireContext())
+			layoutManager = GridLayoutManager(requireContext(), 2)
 		}
 
-		if (viewModel.countRecords().isEmpty()) {
-			binding.textView.visibility = View.VISIBLE
-
-		} else {
-			viewModel.getSavedMovies().observe(viewLifecycleOwner) {
-				favoriteMoviesAdapter.differ.submitList(it)
-			}
+		viewModel.getSavedMovies().observe(viewLifecycleOwner) {
+			favoriteMoviesAdapter.differ.submitList(it)
 		}
 
 
@@ -76,8 +82,7 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 				val position = viewHolder.absoluteAdapterPosition
 				val movie = favoriteMoviesAdapter.differ.currentList[position]
 				viewModel.deleteMovie(movie)
-
-
+				checkIfDbIsEmpty()
 
 			}
 		}
@@ -86,10 +91,7 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 			attachToRecyclerView(binding.recyclerview)
 		}
 
-		if (viewModel.countRecords().isEmpty()) {
-			binding.textView.visibility = View.VISIBLE
 
-		}
 	}
 
 

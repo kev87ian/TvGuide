@@ -2,6 +2,8 @@ package com.kev.tvguide.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +14,12 @@ import com.kev.tvguide.databinding.MovieLayoutItemBinding
 import com.kev.tvguide.models.MovieDetailsResponse
 import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.utils.Constants
+import com.kev.tvguide.view.fragments.FavoriteMoviesFragmentDirections
+import com.kev.tvguide.viewmodel.FavoriteMoviesViewModel
+import javax.inject.Inject
 
-class FavoriteMoviesAdapter : RecyclerView.Adapter<FavoriteMoviesAdapter.MoviesViewHolder>() {
+class FavoriteMoviesAdapter
+ : RecyclerView.Adapter<FavoriteMoviesAdapter.MoviesViewHolder>() {
 	class MoviesViewHolder(val binding: FavoriteMoviesItemBinding) :
 		RecyclerView.ViewHolder(binding.root)
 
@@ -34,6 +40,13 @@ class FavoriteMoviesAdapter : RecyclerView.Adapter<FavoriteMoviesAdapter.MoviesV
 				placeholder(R.drawable.loading)
 			}
 		}
+
+
+		holder.itemView.setOnClickListener {
+			val direction = FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(currentMovie.id!!)
+			it.findNavController().navigate(direction)
+		}
+
 	}
 
 	override fun getItemCount(): Int {
