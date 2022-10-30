@@ -1,6 +1,7 @@
 package com.kev.tvguide.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -203,5 +204,11 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 	override fun onDestroy() {
 		super.onDestroy()
 		_binding = null
+	}
+
+	override fun onResume() {
+		super.onResume()
+		loadTopRatedMovies()
+		Log.i("onrsume", "on resume")
 	}
 }

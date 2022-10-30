@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+
 import com.kev.tvguide.R
 import com.kev.tvguide.R.layout.fragment_movie_details
 import com.kev.tvguide.databinding.FragmentMovieDetailsBinding
@@ -144,7 +145,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 					binding.uiStateLayout.visibility = View.GONE
 					binding.views.visibility = View.VISIBLE
 					bindUi(state.data!!)
-					saveToDb(state.data)
+
 
 				}
 
@@ -160,13 +161,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		}
 	}
 
-	private fun saveToDb(movieDetails: MovieDetailsResponse) {
 
-		binding.favoriteButton.setOnClickListener {
-			viewModel.insertMovieIntoDb(movieDetails)
-			Toast.makeText(requireContext(), "Kazi safi", Toast.LENGTH_SHORT).show()
-		}
-	}
 
 	private fun bindUi(movie: MovieDetailsResponse) {
 
@@ -188,6 +183,13 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		//TODO soma fragment lifecyle vizuri and understand why the movies fragment glitches on resume
 
 
+		//add data to db
+		binding.favoriteButton.setOnClickListener {
+			viewModel.insertMovieIntoDb(movie)
+			Toast.makeText(requireContext(), "${movie.title} added to watch list", Toast.LENGTH_SHORT).show()
+			binding.favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorited_24)
+
+		}
 	}
 
 

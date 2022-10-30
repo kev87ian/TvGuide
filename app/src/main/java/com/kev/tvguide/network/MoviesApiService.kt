@@ -48,6 +48,12 @@ interface MoviesApiService {
 	): Response<MoviesResponse>
 
 
-
+	@GET("search/movie")
+	suspend fun searchMovie(
+		@Query("api_key")
+		api_key: String = BuildConfig.API_KEY,
+		@Query("query")
+		movie_name: String
+	): Response<MoviesResponse>
 
 }
