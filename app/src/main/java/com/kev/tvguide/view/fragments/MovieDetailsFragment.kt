@@ -69,22 +69,24 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		similarMoviesAdapter = SimilarMoviesAdapter()
 		binding.similarMoviesRecyclerview.apply {
 			adapter = similarMoviesAdapter
-			layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+			layoutManager =
+				LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 		}
 
 		viewModel.fetchSimilarMovies(args.movieID)
 
-		viewModel.similarMoviesObservable.observe(viewLifecycleOwner){state->
-			when(state){
-				is State.Error->{
+		viewModel.similarMoviesObservable.observe(viewLifecycleOwner) { state ->
+			when (state) {
+				is State.Error -> {
 
 				}
-				is State.Success->{
+				is State.Success -> {
 					similarMoviesAdapter.differ.submitList(state.data?.movieItems!!)
+					binding.similarMoviesPlaceholder.visibility = View.VISIBLE
 				}
 
-				is State.Loading->{
-
+				is State.Loading -> {
+					binding.similarMoviesPlaceholder.visibility = View.GONE
 				}
 			}
 		}
@@ -113,11 +115,12 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 				}
 
 				is State.Success -> {
+					binding.castPlaceholder.visibility = View.VISIBLE
 					castAdapter.differ.submitList(state.data?.cast!!)
 				}
 
 				is State.Loading -> {
-
+					binding.castPlaceholder.visibility = View.GONE
 				}
 
 			}
@@ -153,14 +156,13 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 /*					binding.progressBar.visibility = View.VISIBLE*/
 					binding.errorMsgTextview.visibility = View.GONE
 					binding.retryBtn.visibility = View.GONE
-					mdialog.setTitle("Working")
+					mdialog.setTitle("Fetching Movie Details")
 					mdialog.setMessage("Please wait.")
 					mdialog.show()
 				}
 			}
 		}
 	}
-
 
 
 	private fun bindUi(movie: MovieDetailsResponse) {
@@ -180,13 +182,17 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		binding.runtimeTextview.text =
 			hours.toString().plus("hr ").plus(minutes.toString()).plus("min")
 
-		//TODO soma fragment lifecyle vizuri and understand why the movies fragment glitches on resume
+
 
 
 		//add data to db
 		binding.favoriteButton.setOnClickListener {
 			viewModel.insertMovieIntoDb(movie)
-			Toast.makeText(requireContext(), "${movie.title} added to watch list", Toast.LENGTH_SHORT).show()
+			Toast.makeText(
+				requireContext(),
+				"${movie.title} added to watch list",
+				Toast.LENGTH_SHORT
+			).show()
 			binding.favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorited_24)
 
 		}

@@ -229,7 +229,7 @@
         <TextView
             android:layout_width="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/linear_layout"
-            android:text="Similar Movies"
+            android:text="You Might Like:"
             android:textSize="18sp"
             android:layout_marginTop="10dp"
             android:textStyle="bold"

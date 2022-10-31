@@ -2,6 +2,7 @@ package com.kev.tvguide.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.kev.tvguide.R
 import com.kev.tvguide.databinding.MovieLayoutItemBinding
 import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.utils.Constants
+import com.kev.tvguide.view.fragments.SearchMoviesFragmentDirections
 
 class SearchMoviesAdapter : RecyclerView.Adapter<SearchMoviesAdapter.MovieViewHolder>() {
 
@@ -27,9 +29,15 @@ class SearchMoviesAdapter : RecyclerView.Adapter<SearchMoviesAdapter.MovieViewHo
 	override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 		val currentMovie = differ.currentList[position]
 		with(holder){
+
 			binding.cvIvMoviePoster.load(Constants.BASE_POSTER_URL.plus(currentMovie.posterPath)){
 				error(R.drawable.no_picture_icon)
 			}
+		}
+
+		holder.itemView.setOnClickListener {
+			val direction = SearchMoviesFragmentDirections.actionSearchMoviesFragmentToMovieDetailsFragment(currentMovie.id)
+			it.findNavController().navigate(direction)
 		}
 	}
 

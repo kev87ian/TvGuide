@@ -13,22 +13,7 @@
     android:clickable="true"
     android:focusable="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:gravity="end"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/delete_button"
-            android:contentDescription="delete button"
-            android:background="@drawable/ic_baseline_delete_24"
-            android:layout_marginEnd="10dp"
 
-            />
-
-
-    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -33,6 +33,7 @@ class SimilarMoviesAdapter : RecyclerView.Adapter<SimilarMoviesAdapter.MoviesVie
 				placeholder(R.drawable.loading)
 				error(R.drawable.no_picture_icon)
 			}
+
 		}
 
 		holder.itemView.setOnClickListener {
