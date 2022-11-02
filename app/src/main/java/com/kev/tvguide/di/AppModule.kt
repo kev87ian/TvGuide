@@ -20,26 +20,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-	@Provides
-	@Singleton
-	fun providesLoggingInterceptor() = HttpLoggingInterceptor().apply {
-		level = HttpLoggingInterceptor.Level.BODY
-	}
 
 	@Singleton
 	@Provides
-	fun providesOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-		return OkHttpClient.Builder()
-			.addInterceptor(loggingInterceptor)
-			.build()
-	}
-
-	@Singleton
-	@Provides
-	fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
+	fun providesRetrofit(): Retrofit {
 		return Retrofit.Builder()
 			.baseUrl(Constants.BASE_URL)
-			.client(okHttpClient)
+			.client(OkHttpClient())
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
 	}

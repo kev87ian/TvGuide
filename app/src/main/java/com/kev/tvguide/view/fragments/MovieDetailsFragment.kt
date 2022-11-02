@@ -107,11 +107,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		viewModel.movieCastObservable.observe(viewLifecycleOwner) { state ->
 			when (state) {
 				is State.Error -> {
-					Toast.makeText(
-						requireContext(),
-						"Couldn't fetch cast. Please retry.",
-						Toast.LENGTH_SHORT
-					).show()
+
 				}
 
 				is State.Success -> {

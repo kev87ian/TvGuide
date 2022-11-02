@@ -70,9 +70,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/movies_now_playing_recycler_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -115,7 +115,7 @@
                 android:visibility="gone" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerLayout"
+                android:id="@+id/shimmerLayout_toprated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -139,8 +139,7 @@
                 android:id="@+id/top_rated_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/shimmerLayout"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
         </LinearLayout>
@@ -205,9 +204,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/upcoming_movies_recycler_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
         </LinearLayout>

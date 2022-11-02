@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,9 +16,9 @@ import com.kev.tvguide.R
 import com.kev.tvguide.databinding.FragmentTopRatedMoviesBinding
 import com.kev.tvguide.utils.State
 import com.kev.tvguide.view.adapters.MoviesNowPlayingAdapter
+import com.kev.tvguide.view.adapters.UpcomingMoviesAdapter
 import com.kev.tvguide.view.adapters.pagination.PaginatedMoviesLoadStateAdapter
 import com.kev.tvguide.view.adapters.pagination.TopRatedMoviesPagingAdapter
-import com.kev.tvguide.view.adapters.UpcomingMoviesAdapter
 import com.kev.tvguide.viewmodel.MoviesNowPlayingViewModel
 import com.kev.tvguide.viewmodel.TopRatedMoviesViewModel
 import com.kev.tvguide.viewmodel.UpcomingMoviesViewModel
@@ -88,16 +89,19 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		upcomingMoviesViewModel.upcomingMoviesObservable.observe(viewLifecycleOwner) { resource ->
 			when (resource) {
 				is State.Loading -> {
-					binding.shimmerLayoutUpcomingMovies.visibility = View.VISIBLE
+
 					binding.shimmerLayoutUpcomingMovies.startShimmer()
 					binding.upcomingMoviesErrorTextview.visibility = View.GONE
 					binding.upcomingRetryBtn.visibility = View.GONE
 				}
 				is State.Success -> {
+					binding.shimmerLayoutUpcomingMovies.stopShimmer()
 					binding.shimmerLayoutUpcomingMovies.visibility = View.GONE
+					binding.upcomingMoviesRecyclerView.visibility = View.VISIBLE
 					upcomingMoviesAdapter.differ.submitList(resource.data)
 				}
 				is State.Error -> {
+
 					binding.shimmerLayoutUpcomingMovies.visibility = View.GONE
 					binding.upcomingMoviesErrorTextview.visibility = View.VISIBLE
 					binding.upcomingMoviesErrorTextview.text = resource.message
@@ -126,8 +130,8 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		nowPlayingViewModel.moviesNowPlayingObservable.observe(viewLifecycleOwner) { state ->
 			when (state) {
 				is State.Loading -> {
+
 					binding.shimmerLayoutNowPlaying.startShimmer()
-					binding.shimmerLayoutNowPlaying.visibility = View.VISIBLE
 					binding.nowPlayingRetryBtn.visibility = View.GONE
 					binding.nowPlayingErrorTextview.visibility = View.GONE
 				}
@@ -135,6 +139,7 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 				is State.Success -> {
 					binding.shimmerLayoutNowPlaying.stopShimmer()
 					binding.shimmerLayoutNowPlaying.visibility = View.GONE
+					binding.moviesNowPlayingRecyclerView.visibility = View.VISIBLE
 					nowPlayingAdapter.differ.submitList(state.data)
 				}
 				is State.Error -> {
@@ -181,34 +186,37 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		moviesPagingAdapter.addLoadStateListener { loadstate ->
 
 			if (loadstate.refresh is LoadState.Loading) {
+
+				binding.shimmerLayoutToprated.startShimmer()
 				binding.errorMsgTextview.visibility = View.GONE
 				binding.topRatedMoviesBtnRetry.visibility = View.GONE
-				/*binding.shimmerLayout.visibility = View.VISIBLE*/
-				binding.shimmerLayout.startShimmer()
+
+
+
 			} else if (loadstate.refresh is LoadState.Error) {
-				binding.shimmerLayout.visibility = View.GONE
+				binding.shimmerLayoutToprated.visibility = View.GONE
 				binding.errorMsgTextview.visibility = View.VISIBLE
 				binding.topRatedMoviesBtnRetry.visibility = View.VISIBLE
 			} else {
-				binding.shimmerLayout.stopShimmer()
 				binding.errorMsgTextview.visibility = View.GONE
-				binding.topRatedMoviesBtnRetry.visibility = View.GONE
-				binding.shimmerLayout.stopShimmer()
-				binding.shimmerLayout.visibility = View.GONE
+				binding.shimmerLayoutToprated.visibility = View.GONE
+				binding.topRatedRecyclerview.visibility = View.VISIBLE
 			}
 
 
 		}
 	}
 
+	override fun onPause() {
+
+		super.onPause()
+	}
+
+
 	override fun onDestroy() {
 		super.onDestroy()
 		_binding = null
 	}
 
-	override fun onResume() {
-		super.onResume()
-		loadTopRatedMovies()
-		Log.i("onrsume", "on resume")
-	}
+
 }

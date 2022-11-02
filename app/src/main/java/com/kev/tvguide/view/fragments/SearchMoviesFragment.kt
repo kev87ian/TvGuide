@@ -56,7 +56,7 @@ class SearchMoviesFragment : Fragment(R.layout.fragment_search_movies) {
 			job = MainScope().launch {
 				delay(500L)
 				editable?.let {
-					if (editable.toString().isNotEmpty()){
+					if (editable.toString().isNotBlank()){
 						viewModel.searchForMovies(editable.toString())
 					}
 				}
