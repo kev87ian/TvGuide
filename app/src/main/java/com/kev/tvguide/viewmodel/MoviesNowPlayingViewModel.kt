@@ -35,7 +35,7 @@ class MoviesNowPlayingViewModel @Inject constructor(
 			e.printStackTrace()
 			when(e){
 				is IOException -> _moviesNowPlayingObservable.postValue(State.Error("Ensure you have an active internet connection."))
-				is HttpException -> _moviesNowPlayingObservable.postValue(State.Error("An uknown error occured. Please retry"))
+				is HttpException -> _moviesNowPlayingObservable.postValue(State.Error("An unknown error occurred. Please retry"))
 				else -> _moviesNowPlayingObservable.postValue(State.Error(e.localizedMessage!!))
 			}
 		}

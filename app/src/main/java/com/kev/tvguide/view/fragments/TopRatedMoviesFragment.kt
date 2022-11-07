@@ -1,12 +1,10 @@
 package com.kev.tvguide.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -51,16 +49,12 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 		fetchMoviesNowPlaying()
 
 
-		binding.topRatedMoviesBtnRetry.setOnClickListener {
-			retryFetchingTopRatedMovies()
-		}
-		binding.nowPlayingRetryBtn.setOnClickListener {
-			fetchMoviesNowPlaying()
-		}
-
 		binding.upcomingRetryBtn.setOnClickListener {
+			retryFetchingTopRatedMovies()
+			fetchMoviesNowPlaying()
 			fetchUpcomingMovies()
 		}
+
 	}
 
 
@@ -103,9 +97,10 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 				is State.Error -> {
 
 					binding.shimmerLayoutUpcomingMovies.visibility = View.GONE
+					binding.upcomingRetryBtn.visibility = View.VISIBLE
 					binding.upcomingMoviesErrorTextview.visibility = View.VISIBLE
 					binding.upcomingMoviesErrorTextview.text = resource.message
-					binding.upcomingRetryBtn.visibility = View.VISIBLE
+
 				}
 			}
 
@@ -145,9 +140,10 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 				is State.Error -> {
 
 					binding.shimmerLayoutNowPlaying.visibility = View.GONE
-					binding.nowPlayingErrorTextview.visibility = View.VISIBLE
-					binding.nowPlayingErrorTextview.text = state.message
-					binding.nowPlayingRetryBtn.visibility = View.VISIBLE
+
+					/*	binding.nowPlayingErrorTextview.visibility = View.VISIBLE
+						binding.nowPlayingErrorTextview.text = state.message
+						binding.nowPlayingRetryBtn.visibility = View.VISIBLE*/
 
 
 				}
@@ -192,11 +188,10 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 				binding.topRatedMoviesBtnRetry.visibility = View.GONE
 
 
-
 			} else if (loadstate.refresh is LoadState.Error) {
 				binding.shimmerLayoutToprated.visibility = View.GONE
-				binding.errorMsgTextview.visibility = View.VISIBLE
-				binding.topRatedMoviesBtnRetry.visibility = View.VISIBLE
+				/*			binding.errorMsgTextview.visibility = View.VISIBLE
+							binding.topRatedMoviesBtnRetry.visibility = View.VISIBLE*/
 			} else {
 				binding.errorMsgTextview.visibility = View.GONE
 				binding.shimmerLayoutToprated.visibility = View.GONE
@@ -205,11 +200,6 @@ class TopRatedMoviesFragment : Fragment(R.layout.fragment_top_rated_movies) {
 
 
 		}
-	}
-
-	override fun onPause() {
-
-		super.onPause()
 	}
 
 
