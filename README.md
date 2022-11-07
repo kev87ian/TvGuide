@@ -2,7 +2,7 @@
 
 ## Screenshots / App Demo
 ![Shimmer effect](Media/shimmer.jpg)
-[![Application Demo](Media/tvguide.gif)]
+![App Demo](Media/tvguide.gif)
 
 ## Features
 - On the first fragment, the app displays top-rated, upcoming and movies now playing in horizontal recyclerviews.
