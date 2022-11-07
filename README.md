@@ -1,7 +1,8 @@
 - This application consumes the [TMDB API](https://developers.themoviedb.org/3).
 
-## Screenshots / Screen recording
+## Screenshots / App Demo
 ![Shimmer effect](Media/shimmer.jpg)
+[![Application Demo](Media/tvguide.gif)]
 
 ## Features
 - On the first fragment, the app displays top-rated, upcoming and movies now playing in horizontal recyclerviews.
