@@ -184,11 +184,7 @@ class MovieDetailsFragment : Fragment(fragment_movie_details) {
 		//add data to db
 		binding.favoriteButton.setOnClickListener {
 			viewModel.insertMovieIntoDb(movie)
-			Toast.makeText(
-				requireContext(),
-				"${movie.title} added to watch list",
-				Toast.LENGTH_SHORT
-			).show()
+			Toast.makeText(requireContext(), "${movie.title} added to watch list", Toast.LENGTH_SHORT).show()
 			binding.favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorited_24)
 
 		}

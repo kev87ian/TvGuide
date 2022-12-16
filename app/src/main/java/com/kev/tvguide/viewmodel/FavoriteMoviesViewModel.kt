@@ -12,6 +12,5 @@ class FavoriteMoviesViewModel @Inject constructor(
 ) : ViewModel() {
 
 	fun getSavedMovies() = repository.getSavedMovies()
-	fun countRecords() = repository.checkIfDbIsEmpty()
 	fun deleteMovie(movieDetailsResponse: MovieDetailsResponse) = repository.deleteMovie(movieDetailsResponse)
 }

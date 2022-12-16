@@ -36,20 +36,14 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		checkIfDbIsEmpty()
+
 		fetchData()
 		swipeToDelete()
 
 
 	}
 
-	private fun checkIfDbIsEmpty() {
-		if (viewModel.countRecords().isEmpty()) {
-			binding.textView.visibility = View.VISIBLE
-		} else {
-			binding.textView.visibility = View.GONE
-		}
-	}
+
 
 	private fun fetchData() {
 		favoriteMoviesAdapter = FavoriteMoviesAdapter()
@@ -58,8 +52,15 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 			layoutManager = GridLayoutManager(requireContext(), 2)
 		}
 
-		viewModel.getSavedMovies().observe(viewLifecycleOwner) {
-			favoriteMoviesAdapter.differ.submitList(it)
+
+		viewModel.getSavedMovies().observe(viewLifecycleOwner){
+			if (it.isEmpty()){
+				binding.textView.visibility = View.VISIBLE
+			}
+			else{
+				binding.textView.visibility = View.GONE
+				favoriteMoviesAdapter.differ.submitList(it)
+			}
 		}
 
 
@@ -82,7 +83,6 @@ class FavoriteMoviesFragment : Fragment(R.layout.fragment_favorite_movies) {
 				val position = viewHolder.absoluteAdapterPosition
 				val movie = favoriteMoviesAdapter.differ.currentList[position]
 				viewModel.deleteMovie(movie)
-				checkIfDbIsEmpty()
 
 			}
 		}

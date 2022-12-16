@@ -8,6 +8,7 @@ import com.kev.tvguide.models.MovieItem
 import com.kev.tvguide.repositories.MoviesNowPlayingRepository
 import com.kev.tvguide.utils.State
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -43,5 +44,7 @@ class MoviesNowPlayingViewModel @Inject constructor(
 
 
 	}
+
+
 
 }

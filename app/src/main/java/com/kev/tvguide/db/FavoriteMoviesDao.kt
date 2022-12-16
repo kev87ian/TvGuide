@@ -18,9 +18,6 @@ interface FavoriteMoviesDao {
 	@Query("SELECT * FROM movie_details")
 	fun getSavedMovies() : LiveData<List<MovieDetailsResponse>>
 
-	@Query("SELECT * FROM movie_details")
-	fun checkIfDbIsEmpty() : List<MovieDetailsResponse>
-
 	@Delete
 	fun deleteMovie(movieDetailsResponse: MovieDetailsResponse)
 

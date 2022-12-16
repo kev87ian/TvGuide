@@ -9,8 +9,5 @@ class FavoriteMoviesRepository
 	private val favoriteMoviesDao: FavoriteMoviesDao
 ) {
 	fun getSavedMovies() = favoriteMoviesDao.getSavedMovies()
-
-	fun checkIfDbIsEmpty() = favoriteMoviesDao.checkIfDbIsEmpty()
-
 	fun deleteMovie(movieDetailsResponse: MovieDetailsResponse) = favoriteMoviesDao.deleteMovie(movieDetailsResponse)
 }
