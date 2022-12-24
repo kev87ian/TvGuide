@@ -6,7 +6,8 @@
 
 ## Features
 - On the first fragment, the app displays top-rated, upcoming and movies now playing in horizontal recyclerviews.
-- On clicking movie details, the app also displays the characters, and movies you'd like, based on the current movie.
+- The top-rated movies are paginated (endless scrolling).
+- On clicking the movie thumbnail, the app also displays the characters, and movies you'd like, based on the current movie.
 - There is also a search movies feature.
 - A user is also able to add movies to favorites database. 
 - On the favorites' screen, swipe to delete is enabled.
