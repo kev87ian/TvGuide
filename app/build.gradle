@@ -4,10 +4,16 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
-
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { stream ->
+        localProperties.load(stream)
+    }
+}
 android {
     namespace 'com.kev.tvguide'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.kev.tvguide"
@@ -20,6 +26,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField "String", "API_KEY", "\"${localProperties['API_KEY']}\""
     }
 
     buildTypes {
@@ -37,6 +45,7 @@ android {
     }
     buildFeatures {
         compose true
+        buildConfig true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.2.0'
@@ -103,5 +112,8 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    //lottie
+    implementation("com.airbnb.android:lottie-compose:6.0.0")
 
 }
