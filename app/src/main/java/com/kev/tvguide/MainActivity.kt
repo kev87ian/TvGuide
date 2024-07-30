@@ -8,10 +8,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.kev.tvguide.ui.theme.TvGuideTheme
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.kev.tvguide.presentation.theme.TvGuideTheme
+import com.kev.tvguide.presentation.ShowsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name!")
+//    val viewModel = hiltViewModel<ShowsViewModel>()
+//    val state = viewModel.popularShows.collectAsState()
+//
+//    println(state.value.data)
+
 
 }
 

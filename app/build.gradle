@@ -116,4 +116,12 @@ dependencies {
     //lottie
     implementation("com.airbnb.android:lottie-compose:6.0.0")
 
+    //pagination
+    def paging_version = "3.3.1"
+
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    implementation "androidx.paging:paging-compose:3.3.1"
+
+
+
 }
