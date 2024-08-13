@@ -7,13 +7,12 @@ import androidx.room.PrimaryKey
 data class PopularResultEntity(
     val backdropPath: String,
     val firstAirDate: String,
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
-    val originCountry: List<String>,
     val originalLanguage: String,
     val overview: String,
     val popularity: Double,
     val posterPath: String,
-    val voteAverage : Int
+    val voteAverage : Float
 )

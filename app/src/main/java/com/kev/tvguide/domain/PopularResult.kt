@@ -7,10 +7,10 @@ data class PopularResult(
     val firstAirDate: String,
     val id: Int,
     val name: String,
-    val originCountry: List<String>,
+
     val originalLanguage: String,
     val overview: String,
     val popularity: Double,
     val posterPath: String,
-    val voteAverage : Int
+    val voteAverage : Float
 )

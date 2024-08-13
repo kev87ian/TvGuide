@@ -16,8 +16,7 @@ data class PopularResultDTO(
     val id: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("origin_country")
-    val originCountry: List<String>,
+
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("overview")
@@ -27,5 +26,5 @@ data class PopularResultDTO(
     @SerializedName("poster_path")
     val posterPath: String,
     @SerializedName("vote_average")
-    val voteAverage : Int
+    val voteAverage : Float
 )

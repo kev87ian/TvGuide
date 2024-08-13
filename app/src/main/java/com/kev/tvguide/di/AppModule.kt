@@ -6,6 +6,8 @@ import com.kev.tvguide.data.local.RemoteKeysDao
 import com.kev.tvguide.data.local.ShowsDB
 import com.kev.tvguide.data.local.ShowsDao
 import com.kev.tvguide.data.remote.APIService
+import com.kev.tvguide.data.remote.PopularShowsRemoteMediator
+import com.kev.tvguide.repository.ShowsRepository
 
 import dagger.Module
 import dagger.Provides
@@ -35,7 +37,8 @@ object AppModule {
     @Provides
     @Singleton
     fun providesBeerDatabase(@ApplicationContext context: Context): ShowsDB {
-        return Room.databaseBuilder(
+        return Room
+            .databaseBuilder(
             context,
             ShowsDB::class.java,
             "shows_db",
@@ -80,5 +83,17 @@ object AppModule {
         return retrofit.create(APIService::class.java)
     }
 
-
+@Singleton
+@Provides
+fun providesRepository(db: ShowsDB, apiService: APIService): ShowsRepository{
+    return ShowsRepository(apiService, db)
+}
+    @Singleton
+    @Provides
+    fun providesRemoteKeyMediator(
+        apiService: APIService,
+        db: ShowsDB
+    ): PopularShowsRemoteMediator{
+        return PopularShowsRemoteMediator(apiService, db)
+    }
 }

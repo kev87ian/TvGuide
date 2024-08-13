@@ -1,19 +1,21 @@
 package com.kev.tvguide
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.kev.tvguide.presentation.theme.TvGuideTheme
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.kev.tvguide.presentation.ShowsViewModel
+import com.kev.tvguide.presentation.screens.MainScreen
+import com.kev.tvguide.presentation.screens.ShowsDemo
+import com.kev.tvguide.presentation.theme.TvGuideTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,30 +27,14 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
-                    Greeting("Android")
+                    val viewModel = hiltViewModel<ShowsViewModel>()
+//                    viewModel.popularShows
+//                    MainScreen(viewModel)
+                    ShowsDemo(viewModel = viewModel)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-//    val viewModel = hiltViewModel<ShowsViewModel>()
-//    val state = viewModel.popularShows.collectAsState()
-//
-//    println(state.value.data)
-
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TvGuideTheme {
-        Greeting("Android")
     }
 }
